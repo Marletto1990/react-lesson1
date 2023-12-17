@@ -7,10 +7,11 @@ import { TData, dataPromise } from '../data';
 const pData = dataPromise;
 const App = () => {
 	const [busy, setBusy] = useState<boolean>(true);
-	const [items, setItems] = useState([]);
+	const [items, setItems] = useState<TData[]>([]);
 
 	useEffect(() => {
 		pData.then((data) => {
+			setItems(data)
 			setBusy(false)
 		});
 	}, []);
@@ -18,7 +19,7 @@ const App = () => {
 	return (
 		<>
 			<Header />
-			<Body busy={busy} products={[]}/>
+			<Body busy={busy} products={items}/>
 			<Footer />
 		</>
 	);

@@ -1,26 +1,27 @@
-import React from 'react';
+import { FC } from 'react';
+import { TProductCardType } from '../ProductCard/TProductCardType';
 import { Card } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-export const ProductCard = () => {
+
+export const ProductCard: FC<TProductCardType> = (props) => {
 	return (
 		<>
 			<Card sx={{ maxWidth: 345 }}>
 				<CardMedia
 					sx={{ height: 140 }}
-					image='https://react-learning.ru/image-compressed/7.jpg'
-					title='green iguana'
+					image={props.picture}
+					title={props.name}
 				/>
 				<CardContent>
 					<Typography gutterBottom variant='h5' component='div'>
-						Lizard
+						{props.name}
 					</Typography>
 					<Typography variant='body2' color='text.secondary'>
-						Lizards are a widespread group of squamate reptiles, with over 6,000
-						species, ranging across all continents except Antarctica
+						{props.description}
 					</Typography>
 				</CardContent>
 				<CardActions>

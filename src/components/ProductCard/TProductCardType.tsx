@@ -1,5 +1,4 @@
 export type TProductCardType = {
-	busy: boolean;
 	name: string;
 	price: number;
 	discount: number;

@@ -209,7 +209,7 @@ const data: TData[] = [
 const dataPromise: Promise<TData[]> = new Promise((resolve) =>
 	setTimeout(() => {
 		resolve(data);
-	}, 1000)
+	}, 300)
 );
 
 export { dataPromise };
