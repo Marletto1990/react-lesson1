@@ -18,8 +18,8 @@ export const Body: FC<TBodyType> = ({
 	count,
 	pagination,
 	onPressPagination,
+	onPressSort
 }) => {
-	// TODO пагинация
 	useEffect(() => {}, []);
 	return (
 		<>
@@ -29,7 +29,7 @@ export const Body: FC<TBodyType> = ({
 				</Box>
 			) : (
 				<Box sx={{ paddingTop: '7rem', paddingBottom: '10rem' }}>
-					<Sorter />
+					<Sorter onPressSort={onPressSort}/>
 					<Container maxWidth={'lg'}>
 						<Grid container columns={{ xs: 4, sm: 8, md: 12 }} spacing={3}>
 							{products.map((item, i) => (

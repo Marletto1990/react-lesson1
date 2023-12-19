@@ -3,6 +3,7 @@ import { Header } from '../components/Header/Header';
 import { Body } from '../components/Body/Body';
 import { Footer } from '../components/Footer/Footer';
 import { TData, dataPromise } from '../data';
+import { TSortByType } from '../components/Sorter/TSortByType';
 
 const App = () => {
 	const MAX_CARD_ON_PAGE = 6;
@@ -10,10 +11,12 @@ const App = () => {
 	const [items, setItems] = useState<TData[]>([]);
 	const [count, setCount] = useState<number>(0);
 	const [pagination, setPagination] = useState<number>(1);
+	const [sortBy, setSortBy] = useState<TSortByType>('name')
 
 	useEffect(() => {
 		dataPromise.then((data) => {
 			setCount(Math.ceil(data.length/MAX_CARD_ON_PAGE));
+			// TODO сортировка
 			let lastIndexOfProduct: number = MAX_CARD_ON_PAGE * pagination;
 			let currentPageData: TData[] = data.filter(
 				(p, i) =>
@@ -24,7 +27,7 @@ const App = () => {
 			setItems(currentPageData);
 			setBusy(false);
 		});
-	}, [pagination]);
+	}, [pagination, sortBy]);
 
 	return (
 		<>
@@ -35,6 +38,7 @@ const App = () => {
 				products={items}
 				pagination={pagination}
 				onPressPagination={setPagination}
+				onPressSort={setSortBy}
 			/>
 			<Footer />
 		</>
