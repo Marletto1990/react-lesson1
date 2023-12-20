@@ -16,7 +16,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export const ProductCard: FC<TProductCardType> = (props) => {
 	const discount = props.discount ? `-${props.discount}%` : 0;
-	const fullPrice = props.discount ? (props.price + props.price*props.discount/100).toFixed(0) : null;
+	const fullPrice = props.discount
+		? (props.price + (props.price * props.discount) / 100).toFixed(0)
+		: null;
 	return (
 		<>
 			<Card sx={{ maxWidth: 345 }}>
@@ -42,14 +44,18 @@ export const ProductCard: FC<TProductCardType> = (props) => {
 							sx={{ m: 1 }}>
 							{props.price} р
 						</Typography>
-						{fullPrice &&
+						{fullPrice && (
 							<Typography
-							variant='h5'
-							color='text.error'
-							sx={{ m: 1 , textDecoration: 'line-through', color:"#747475"}}>
-							{fullPrice} р
-						</Typography>
-						}
+								variant='h5'
+								color='text.error'
+								sx={{
+									m: 1,
+									textDecoration: 'line-through',
+									color: '#747475',
+								}}>
+								{fullPrice} р
+							</Typography>
+						)}
 						<Badge
 							badgeContent={discount}
 							color='error'
@@ -68,4 +74,3 @@ export const ProductCard: FC<TProductCardType> = (props) => {
 		</>
 	);
 };
-

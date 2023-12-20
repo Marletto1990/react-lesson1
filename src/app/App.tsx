@@ -12,31 +12,38 @@ const App = () => {
 	const [count, setCount] = useState<number>(0);
 	const [pagination, setPagination] = useState<number>(1);
 	const [sortBy, setSortBy] = useState<TSortByType>();
+	const [searchBy, setSearchBy] = useState<string>('');
 
 	useEffect(() => {
 		dataPromise.then((data) => {
-			setCount(Math.ceil(data.length / MAX_CARD_ON_PAGE));
+			const searchedData = data.filter((product) =>
+				product.name.includes(searchBy.toLowerCase())
+			);
+
+			setCount(Math.ceil(searchedData.length / MAX_CARD_ON_PAGE));
 
 			let sortedData;
 			switch (sortBy) {
 				case 'name':
-					sortedData = data.sort((a, b) => {
-						return a[sortBy].toLowerCase().localeCompare(b[sortBy].toLowerCase());
+					sortedData = searchedData.sort((a, b) => {
+						return a[sortBy]
+							.toLowerCase()
+							.localeCompare(b[sortBy].toLowerCase());
 					});
 					break;
 				case 'discount':
-					sortedData = data.sort((a, b) => {
+					sortedData = searchedData.sort((a, b) => {
 						return b[sortBy] - a[sortBy];
 					});
 					break;
 				case 'price':
-					sortedData = data.sort((a, b) => {
+					sortedData = searchedData.sort((a, b) => {
 						return a[sortBy] - b[sortBy];
 					});
 					break;
 
 				default:
-					sortedData = data;
+					sortedData = searchedData;
 			}
 			// TODO сортировка
 			const lastIndexOfProduct: number = MAX_CARD_ON_PAGE * pagination;
@@ -49,11 +56,11 @@ const App = () => {
 			setItems(currentPageData);
 			setBusy(false);
 		});
-	}, [pagination, sortBy]);
+	}, [pagination, sortBy, searchBy]);
 
 	return (
 		<>
-			<Header />
+			<Header busy={busy} onSearch={setSearchBy} />
 			<Body
 				busy={busy}
 				count={count}
@@ -68,4 +75,3 @@ const App = () => {
 };
 
 export default App;
-

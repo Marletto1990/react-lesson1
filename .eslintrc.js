@@ -36,7 +36,7 @@ module.exports = {
 			'error',
 			{
 				endOfLine: 'auto',
-				bracketSameLine: 'false',
+				bracketSameLine: true,
 			},
 		],
 	},

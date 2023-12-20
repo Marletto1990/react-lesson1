@@ -1,1 +1,1 @@
-export type TSortByType = 'price' | 'name' | 'discount' | undefined;
+export type TSortByType = 'price' | 'name' | 'discount';

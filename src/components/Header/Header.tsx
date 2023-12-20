@@ -1,4 +1,5 @@
-import React from 'react';
+import { FC } from 'react';
+import { THeaderType } from './THeaderType';
 import {
 	AppBar,
 	Toolbar,
@@ -9,7 +10,7 @@ import {
 	Badge,
 } from '@mui/material';
 import { SearchField } from '../SearchField/SearchField';
-export const Header = () => {
+export const Header: FC<THeaderType> = ({ onSearch }) => {
 	return (
 		<>
 			<AppBar
@@ -56,7 +57,7 @@ export const Header = () => {
 				</Toolbar>
 				<Toolbar sx={{ justifyContent: 'end', width: '50%' }}>
 					<Box>
-						<SearchField />
+						<SearchField onSearch={onSearch} />
 					</Box>
 					<Toolbar sx={{ padding: '5px' }}>
 						<Box sx={{ padding: '5px' }}>
