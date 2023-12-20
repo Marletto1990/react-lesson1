@@ -1,0 +1,7 @@
+{
+	"editor.tabSize": 2,
+	"prettier.useTabs": true,
+	"prettier.semi": true,
+	"prettier.trailingComma": "es5",
+	"prettier.endOfLine": "crlf",
+}
