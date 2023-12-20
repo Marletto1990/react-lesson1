@@ -1,6 +1,6 @@
 {
-	"editor.tabSize": 2,
-	"prettier.useTabs": true,
+	"editor.tabSize": 4,
+	"prettier.useTabs": false,
 	"prettier.semi": true,
 	"prettier.trailingComma": "es5",
 	"prettier.endOfLine": "crlf",

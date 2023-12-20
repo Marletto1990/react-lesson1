@@ -28,7 +28,10 @@ export const Body: FC<TBodyType> = ({
 				<Box sx={{ paddingTop: '7rem', paddingBottom: '10rem' }}>
 					<Sorter onPressSort={onChangeSort} />
 					<Container maxWidth={'lg'}>
-						<Grid container columns={{ xs: 4, sm: 8, md: 12 }} spacing={3}>
+						<Grid
+							container
+							columns={{ xs: 4, sm: 8, md: 12 }}
+							spacing={3}>
 							{products.map((item, i) => (
 								<Grid item key={i}>
 									<ProductCard
@@ -46,9 +49,13 @@ export const Body: FC<TBodyType> = ({
 							))}
 						</Grid>
 					</Container>
-					<Stack alignItems={'center'} sx={{ left: '40%', marginTop: '2rem' }}>
+					<Stack
+						alignItems={'center'}
+						sx={{ left: '40%', marginTop: '2rem' }}>
 						<Pagination
-							onChange={(event, value) => onPressPagination(value)}
+							onChange={(event, value) =>
+								onPressPagination(value)
+							}
 							count={count}
 							color='primary'
 							size='large'
