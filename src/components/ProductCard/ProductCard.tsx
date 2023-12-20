@@ -31,7 +31,7 @@ export const ProductCard: FC<TProductCardType> = (props) => {
 					title={props.name}
 				/>
 				<CardContent>
-					<Typography variant='h5' color='text.error' sx={{ m: 1}}>
+					<Typography variant='h5' color='text.error' sx={{ m: 1 }}>
 						{props.price} р
 					</Typography>
 					<Typography variant='body2' color='text.secondary'>

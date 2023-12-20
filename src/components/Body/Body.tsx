@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { TBodyType } from './TBodyType';
 import {
 	Box,
@@ -7,7 +7,6 @@ import {
 	Stack,
 	Pagination,
 	Grid,
-	Toolbar,
 } from '@mui/material';
 import { Sorter } from '../Sorter/Sorter';
 import { ProductCard } from '../ProductCard/ProductCard';
@@ -16,11 +15,9 @@ export const Body: FC<TBodyType> = ({
 	busy,
 	products,
 	count,
-	pagination,
 	onPressPagination,
-	onPressSort
+	onChangeSort,
 }) => {
-	useEffect(() => {}, []);
 	return (
 		<>
 			{busy ? (
@@ -29,7 +26,7 @@ export const Body: FC<TBodyType> = ({
 				</Box>
 			) : (
 				<Box sx={{ paddingTop: '7rem', paddingBottom: '10rem' }}>
-					<Sorter onPressSort={onPressSort}/>
+					<Sorter onPressSort={onChangeSort} />
 					<Container maxWidth={'lg'}>
 						<Grid container columns={{ xs: 4, sm: 8, md: 12 }} spacing={3}>
 							{products.map((item, i) => (
@@ -51,7 +48,7 @@ export const Body: FC<TBodyType> = ({
 					</Container>
 					<Stack alignItems={'center'} sx={{ left: '40%', marginTop: '2rem' }}>
 						<Pagination
-							onChange={(event: any, value: number) => onPressPagination(value)}
+							onChange={(event, value) => onPressPagination(value)}
 							count={count}
 							color='primary'
 							size='large'

@@ -5,7 +5,7 @@ export const Footer = () => {
 	return (
 		<>
 			<AppBar position='relative' sx={{ top: 'auto', bottom: 0 }}>
-				<Toolbar/>
+				<Toolbar />
 			</AppBar>
 		</>
 	);

@@ -1,3 +1,3 @@
 export type THeaderType = {
-	busy: boolean
+	busy: boolean;
 };

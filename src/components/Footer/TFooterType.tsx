@@ -1,3 +1,3 @@
 export type TFooterType = {
-	busy: boolean
+	busy: boolean;
 };

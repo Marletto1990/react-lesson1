@@ -1,4 +1,4 @@
-import { TSortByType } from "./TSortByType";
+import { TSortByType } from './TSortByType';
 export type TSorterType = {
-	onPressSort: (value:TSortByType) => void
+	onPressSort: (value: TSortByType) => void;
 };

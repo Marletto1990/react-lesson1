@@ -4,7 +4,7 @@ import { TSortByType } from './TSortByType';
 import { FC, useState } from 'react';
 
 export const Sorter: FC<TSorterType> = ({ onPressSort }) => {
-	const [sortBy, setSortBy] = useState<TSortByType>(undefined);
+	const [sortBy, setSortBy] = useState<TSortByType>();
 	return (
 		<Toolbar sx={{ justifyContent: 'center' }}>
 			<ButtonGroup
@@ -14,13 +14,30 @@ export const Sorter: FC<TSorterType> = ({ onPressSort }) => {
 				<Button
 					onClick={() => {
 						const sorter: TSortByType = 'price';
+						setSortBy(sorter);
 						onPressSort(sorter);
 					}}
-					variant={sortBy === 'name' ? 'outlined' : 'contained'}>
-					Сначала дорогие
+					variant={sortBy === 'price' ? 'contained' : 'text'}>
+					По цене
 				</Button>
-				<Button>Сначала дешевые</Button>
-				<Button>По размеру скидки</Button>
+				<Button
+					onClick={() => {
+						const sorter: TSortByType = 'name';
+						setSortBy(sorter);
+						onPressSort(sorter);
+					}}
+					variant={sortBy === 'name' ? 'contained' : 'text'}>
+					По имени
+				</Button>
+				<Button
+					onClick={() => {
+						const sorter: TSortByType = 'discount';
+						setSortBy(sorter);
+						onPressSort(sorter);
+					}}
+					variant={sortBy === 'discount' ? 'contained' : 'text'}>
+					По размеру скидки
+				</Button>
 			</ButtonGroup>
 		</Toolbar>
 	);
