@@ -14,22 +14,30 @@ const App = () => {
 	const [sortBy, setSortBy] = useState<TSortByType>();
 
 	useEffect(() => {
-		debugger;
 		dataPromise.then((data) => {
-			debugger;
 			setCount(Math.ceil(data.length / MAX_CARD_ON_PAGE));
-			const sortedData = sortBy
-				? data.sort((a, b) => {
-						const a1 = a[sortBy];
-						const b1 = b[sortBy];
 
-						if (typeof a1 === 'number' && typeof b1 === 'number') {
-							return b1 - a1;
-						}
+			let sortedData;
+			switch (sortBy) {
+				case 'name':
+					sortedData = data.sort((a, b) => {
+						return a[sortBy].toLowerCase().localeCompare(b[sortBy].toLowerCase());
+					});
+					break;
+				case 'discount':
+					sortedData = data.sort((a, b) => {
+						return b[sortBy] - a[sortBy];
+					});
+					break;
+				case 'price':
+					sortedData = data.sort((a, b) => {
+						return a[sortBy] - b[sortBy];
+					});
+					break;
 
-						return 0;
-				  })
-				: data;
+				default:
+					sortedData = data;
+			}
 			// TODO сортировка
 			const lastIndexOfProduct: number = MAX_CARD_ON_PAGE * pagination;
 			const currentPageData: TData[] = sortedData.filter(
@@ -60,3 +68,4 @@ const App = () => {
 };
 
 export default App;
+
