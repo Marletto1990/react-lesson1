@@ -1,17 +1,16 @@
 import { FC } from 'react';
-import { TBodyType } from './TBodyType';
+import { TBody } from './TBody';
 import {
 	Box,
 	Container,
 	CircularProgress,
-	Stack,
 	Pagination,
 	Grid,
 } from '@mui/material';
 import { Sorter } from '../Sorter/Sorter';
 import { ProductCard } from '../ProductCard/ProductCard';
 
-export const Body: FC<TBodyType> = ({
+export const Body: FC<TBody> = ({
 	busy,
 	products,
 	count,
@@ -49,9 +48,13 @@ export const Body: FC<TBodyType> = ({
 							))}
 						</Grid>
 					</Container>
-					<Stack
+					<Box
 						alignItems={'center'}
-						sx={{ left: '40%', marginTop: '2rem' }}>
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							marginTop: '2rem',
+						}}>
 						<Pagination
 							onChange={(event, value) =>
 								onPressPagination(value)
@@ -61,7 +64,7 @@ export const Body: FC<TBodyType> = ({
 							size='large'
 							siblingCount={2}
 						/>
-					</Stack>
+					</Box>
 				</Box>
 			)}
 		</>

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { THeaderType } from './THeaderType';
+import { THeader } from './THeader';
 import {
 	AppBar,
 	Toolbar,
@@ -10,7 +10,8 @@ import {
 	Badge,
 } from '@mui/material';
 import { SearchField } from '../SearchField/SearchField';
-export const Header: FC<THeaderType> = ({ onSearch }) => {
+
+export const Header: FC<THeader> = ({ onSearch }) => {
 	return (
 		<>
 			<AppBar
