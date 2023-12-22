@@ -1,6 +1,6 @@
 import { TProductCard } from '../ProductCard/TProductCard';
 import { TSortBy } from '../Sorter/TSortBy';
-export type TBody = {
+export type TCatalogue = {
 	busy: boolean;
 	products: TProductCard[];
 	pagination: number;

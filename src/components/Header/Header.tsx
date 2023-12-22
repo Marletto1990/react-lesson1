@@ -9,7 +9,7 @@ import {
 	Tooltip,
 	Badge,
 } from '@mui/material';
-import { SearchField } from '../SearchField/SearchField';
+import { SearchField } from '..';
 
 export const Header: FC<THeader> = ({ onSearch }) => {
 	return (

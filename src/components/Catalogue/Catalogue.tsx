@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { TBody } from './TBody';
+import { TCatalogue } from './TCatalogue';
 import {
 	Box,
 	Container,
@@ -7,10 +7,9 @@ import {
 	Pagination,
 	Grid,
 } from '@mui/material';
-import { Sorter } from '../Sorter/Sorter';
-import { ProductCard } from '../ProductCard/ProductCard';
+import { Sorter, ProductCard } from '..';
 
-export const Body: FC<TBody> = ({
+export const Catalogue: FC<TCatalogue> = ({
 	busy,
 	products,
 	count,

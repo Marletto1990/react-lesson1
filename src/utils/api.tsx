@@ -18,4 +18,18 @@ export class Api {
 	private getApiUrl(path: string) {
 		return `${this.baseUrl}${path}`;
 	}
+
+	// private getUserInfo() {
+	// 	return fetch(this.getApiUrl('/users/me'), {
+	// 		headers: this.headers,
+	// 	}).then(this.onResponse);
+	// }
 }
+
+// export const api = new Api({
+// 	baseUrl: config.apiUrl,
+// 	headers: {
+// 		'content-type': 'application/json',
+// 		autorization: 'Bearer',
+// 	},
+// });
