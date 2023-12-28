@@ -18,7 +18,7 @@ export const ProductCard: FC<TProductCard> = ({
 	discount,
 	name,
 	price,
-	picture,
+	pictures,
 	wight,
 	description,
 }) => {
@@ -37,7 +37,7 @@ export const ProductCard: FC<TProductCard> = ({
 					title={name}
 					subheader={wight}
 				/>
-				<CardMedia sx={{ height: 120 }} image={picture} title={name} />
+				<CardMedia sx={{ height: 120 }} image={pictures} title={name} />
 				<CardContent>
 					<Stack direction='row'>
 						<Typography

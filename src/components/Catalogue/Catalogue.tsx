@@ -33,7 +33,7 @@ export const Catalogue: FC<TCatalogue> = ({
 							{products.map((item, i) => (
 								<Grid item key={i}>
 									<ProductCard
-										picture={item.picture}
+										pictures={item.pictures}
 										price={item.price}
 										name={item.name}
 										discount={item.discount}
