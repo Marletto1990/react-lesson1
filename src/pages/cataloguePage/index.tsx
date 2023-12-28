@@ -1,7 +1,9 @@
-import { Catalogue, Header } from '../../components';
 import { useEffect, useState } from 'react';
-import { TData, dataPromise } from '../../data';
+
+import { Catalogue, Header } from '../../components';
+import { TData } from '../../data';
 import { TSortBy } from '../../components/Sorter';
+import { api } from '../../api';
 
 export function CataloguePage() {
 	const MAX_CARD_ON_PAGE = 6;
@@ -13,8 +15,8 @@ export function CataloguePage() {
 	const [searchBy, setSearchBy] = useState<string>('');
 
 	useEffect(() => {
-		dataPromise.then((data) => {
-			const searchedData = data.filter((product) =>
+		api.getProducts().then((data) => {
+			const searchedData = data.products.filter((product: TData) =>
 				product.name.includes(searchBy.toLowerCase())
 			);
 
@@ -23,19 +25,19 @@ export function CataloguePage() {
 			let sortedData;
 			switch (sortBy) {
 				case 'name':
-					sortedData = searchedData.sort((a, b) => {
+					sortedData = searchedData.sort((a: any, b: any) => {
 						return a[sortBy]
 							.toLowerCase()
 							.localeCompare(b[sortBy].toLowerCase());
 					});
 					break;
 				case 'discount':
-					sortedData = searchedData.sort((a, b) => {
+					sortedData = searchedData.sort((a: any, b: any) => {
 						return b[sortBy] - a[sortBy];
 					});
 					break;
 				case 'price':
-					sortedData = searchedData.sort((a, b) => {
+					sortedData = searchedData.sort((a: any, b: any) => {
 						return a[sortBy] - b[sortBy];
 					});
 					break;
@@ -45,7 +47,7 @@ export function CataloguePage() {
 			}
 			const lastIndexOfProduct: number = MAX_CARD_ON_PAGE * pagination;
 			const currentPageData: TData[] = sortedData.filter(
-				(p, i) =>
+				(p: number, i: number) =>
 					lastIndexOfProduct - MAX_CARD_ON_PAGE - 1 < i &&
 					i < lastIndexOfProduct
 			);
