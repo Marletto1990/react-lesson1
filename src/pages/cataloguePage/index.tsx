@@ -30,19 +30,19 @@ export function CataloguePage() {
 				let sortedData;
 				switch (sortBy) {
 					case 'name':
-						sortedData = data.products.sort((a: any, b: any) => {
+						sortedData = data.products.sort((a, b) => {
 							return a[sortBy]
 								.toLowerCase()
 								.localeCompare(b[sortBy].toLowerCase());
 						});
 						break;
 					case 'discount':
-						sortedData = data.products.sort((a: any, b: any) => {
+						sortedData = data.products.sort((a, b) => {
 							return b[sortBy] - a[sortBy];
 						});
 						break;
 					case 'price':
-						sortedData = data.products.sort((a: any, b: any) => {
+						sortedData = data.products.sort((a, b) => {
 							return a[sortBy] - b[sortBy];
 						});
 						break;
