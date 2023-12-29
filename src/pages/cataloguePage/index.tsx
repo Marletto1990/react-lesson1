@@ -9,7 +9,7 @@ import { useDebounce } from '../../hooks/useDebouce';
 export function CataloguePage() {
 	const MAX_CARD_ON_PAGE = 6;
 	const [busy, setBusy] = useState<boolean>(true);
-	const [items, setItems] = useState<TData[]>([]);
+	const [items, setItems] = useState<TData['products']>([]);
 	const [count, setCount] = useState<number>(0);
 	const [pagination, setPagination] = useState<number>(1);
 	const [sortBy, setSortBy] = useState<TSortBy>();
@@ -20,8 +20,10 @@ export function CataloguePage() {
 	const handleRequest = useCallback(
 		function handleRequest() {
 			api.getProducts({ query: debounceSearchQuery || undefined }).then(
-				(data) => {
-					setCount(Math.ceil(data.length / MAX_CARD_ON_PAGE));
+				(data: TData) => {
+					setCount(
+						Math.ceil(data.products.length / MAX_CARD_ON_PAGE)
+					);
 					setTotal(data.total);
 
 					let sortedData;
@@ -55,11 +57,12 @@ export function CataloguePage() {
 					}
 					const lastIndexOfProduct: number =
 						MAX_CARD_ON_PAGE * pagination;
-					const currentPageData: TData[] = sortedData.filter(
-						(p: number, i: number) =>
-							lastIndexOfProduct - MAX_CARD_ON_PAGE - 1 < i &&
-							i < lastIndexOfProduct
-					);
+					const currentPageData: TData['products'] =
+						sortedData.filter(
+							(p: any, i: any) =>
+								lastIndexOfProduct - MAX_CARD_ON_PAGE - 1 < i &&
+								i < lastIndexOfProduct
+						);
 
 					setItems(currentPageData);
 					setBusy(false);

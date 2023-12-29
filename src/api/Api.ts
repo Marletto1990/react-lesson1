@@ -3,6 +3,7 @@ type TConfigApi = {
 	headers: HeadersInit;
 };
 import { config } from './config';
+// import { TSortBy } from '../components/Sorter';
 
 class Api {
 	private baseUrl;
