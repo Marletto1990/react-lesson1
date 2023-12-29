@@ -6,6 +6,7 @@ import {
 	CircularProgress,
 	Pagination,
 	Grid,
+	Typography,
 } from '@mui/material';
 import { Sorter, ProductCard } from '..';
 
@@ -13,6 +14,7 @@ export const Catalogue: FC<TCatalogue> = ({
 	busy,
 	products,
 	count,
+	total,
 	onPressPagination,
 	onChangeSort,
 }) => {
@@ -25,6 +27,9 @@ export const Catalogue: FC<TCatalogue> = ({
 			) : (
 				<Box sx={{ paddingTop: '7rem', paddingBottom: '10rem' }}>
 					<Sorter onPressSort={onChangeSort} />
+					<Typography variant='h4' component='h2'>
+						Всего: {total}
+					</Typography>
 					<Container maxWidth={'lg'}>
 						<Grid
 							container

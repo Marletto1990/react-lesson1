@@ -5,6 +5,7 @@ export type TCatalogue = {
 	products: TProductCard[];
 	pagination: number;
 	count: number;
+	total: number;
 	onPressPagination: (value: number) => void;
 	onChangeSort: (value: TSortBy) => void;
 };
