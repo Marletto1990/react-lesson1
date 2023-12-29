@@ -19,55 +19,41 @@ export function CataloguePage() {
 
 	const handleRequest = useCallback(
 		function handleRequest() {
-			api.getProducts({ query: debounceSearchQuery || undefined }).then(
-				(data: TData) => {
-					setCount(
-						Math.ceil(data.products.length / MAX_CARD_ON_PAGE)
-					);
-					setTotal(data.total);
+			api.getProducts({
+				query: debounceSearchQuery || undefined,
+				page: pagination,
+				limit: MAX_CARD_ON_PAGE,
+			}).then((data: TData) => {
+				setCount(Math.ceil(data.total / MAX_CARD_ON_PAGE));
+				setTotal(data.total);
 
-					let sortedData;
-					switch (sortBy) {
-						case 'name':
-							sortedData = data.products.sort(
-								(a: any, b: any) => {
-									return a[sortBy]
-										.toLowerCase()
-										.localeCompare(b[sortBy].toLowerCase());
-								}
-							);
-							break;
-						case 'discount':
-							sortedData = data.products.sort(
-								(a: any, b: any) => {
-									return b[sortBy] - a[sortBy];
-								}
-							);
-							break;
-						case 'price':
-							sortedData = data.products.sort(
-								(a: any, b: any) => {
-									return a[sortBy] - b[sortBy];
-								}
-							);
-							break;
+				let sortedData;
+				switch (sortBy) {
+					case 'name':
+						sortedData = data.products.sort((a: any, b: any) => {
+							return a[sortBy]
+								.toLowerCase()
+								.localeCompare(b[sortBy].toLowerCase());
+						});
+						break;
+					case 'discount':
+						sortedData = data.products.sort((a: any, b: any) => {
+							return b[sortBy] - a[sortBy];
+						});
+						break;
+					case 'price':
+						sortedData = data.products.sort((a: any, b: any) => {
+							return a[sortBy] - b[sortBy];
+						});
+						break;
 
-						default:
-							sortedData = data.products;
-					}
-					const lastIndexOfProduct: number =
-						MAX_CARD_ON_PAGE * pagination;
-					const currentPageData: TData['products'] =
-						sortedData.filter(
-							(p: any, i: any) =>
-								lastIndexOfProduct - MAX_CARD_ON_PAGE - 1 < i &&
-								i < lastIndexOfProduct
-						);
-
-					setItems(currentPageData);
-					setBusy(false);
+					default:
+						sortedData = data.products;
 				}
-			);
+
+				setItems(sortedData);
+				setBusy(false);
+			});
 		},
 		[pagination, sortBy, debounceSearchQuery]
 	);
