@@ -1,3 +1,4 @@
 export type THeaderType = {
-	busy: boolean
+	busy: boolean;
+	onSearch: (value: string) => void;
 };

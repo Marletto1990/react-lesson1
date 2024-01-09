@@ -1,8 +1,20 @@
 import { InputBase } from '@mui/material';
-export const SearchField = () => {
+import { TSearchFieldType } from './TSearchFieldType';
+import { FC } from 'react';
+export const SearchField: FC<TSearchFieldType> = ({ onSearch }) => {
 	return (
 		<>
-			<InputBase  sx={{ background:"white", width: 400, p: 1}}/>
+			<InputBase
+				onChange={(event) => {
+					onSearch(event.target.value);
+				}}
+				sx={{
+					background: 'white',
+					width: 400,
+					p: 1,
+					borderRadius: '8px',
+				}}
+			/>
 		</>
 	);
 };

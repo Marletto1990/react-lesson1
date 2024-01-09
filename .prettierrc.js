@@ -3,9 +3,9 @@ module.exports = {
 	trailingComma: 'es5',
 	singleQuote: true,
 	jsxSingleQuote: true,
-	bracketSameLine: true,
 	printWidth: 80,
 	useTabs: true,
-	tabWidth: 2,
-	endOfLine: 'lf',
+	tabWidth: 4,
+	endOfLine: 'crlf',
+	bracketSameLine: true
 };
