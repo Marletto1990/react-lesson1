@@ -1,4 +1,5 @@
 export type TProductCard = {
+	_id: string;
 	name: string;
 	price: number;
 	discount: number;

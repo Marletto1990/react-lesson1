@@ -1,3 +1,9 @@
+import { Typography } from '@mui/material';
+
 export const Favorites = () => {
-	return <></>;
+	return (
+		<>
+			<Typography> Избранное</Typography>
+		</>
+	);
 };

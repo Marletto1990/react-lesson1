@@ -12,9 +12,11 @@ import {
 	Badge,
 	Stack,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export const ProductCard: FC<TProductCard> = ({
+	_id,
 	discount,
 	name,
 	price,
@@ -37,7 +39,13 @@ export const ProductCard: FC<TProductCard> = ({
 					title={name}
 					subheader={wight}
 				/>
-				<CardMedia sx={{ height: 120 }} image={pictures} title={name} />
+				<Link to={`/product/${_id}`}>
+					<CardMedia
+						sx={{ height: 120 }}
+						image={pictures}
+						title={name}
+					/>
+				</Link>
 				<CardContent>
 					<Stack direction='row'>
 						<Typography
@@ -72,7 +80,9 @@ export const ProductCard: FC<TProductCard> = ({
 				</CardContent>
 				<CardActions>
 					<Button size='small'>Добавить</Button>
-					<Button size='small'>Подробнее</Button>
+					<Link to={`/product/${_id}`}>
+						<Button size='small'>Подробнее</Button>
+					</Link>
 				</CardActions>
 			</Card>
 		</>

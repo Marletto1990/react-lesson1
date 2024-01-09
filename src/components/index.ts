@@ -4,5 +4,14 @@ import { ProductCard } from './ProductCard';
 import { SearchField } from './SearchField';
 import { Sorter } from './Sorter';
 import { Catalogue } from './Catalogue';
+import { NavBackButton } from './NavBackButton';
 
-export { Footer, Header, ProductCard, SearchField, Sorter, Catalogue };
+export {
+	Footer,
+	Header,
+	ProductCard,
+	SearchField,
+	Sorter,
+	Catalogue,
+	NavBackButton,
+};

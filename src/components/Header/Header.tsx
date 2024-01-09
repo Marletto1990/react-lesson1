@@ -1,14 +1,7 @@
 import { FC } from 'react';
 import { THeader } from './THeader';
-import {
-	AppBar,
-	Toolbar,
-	Box,
-	SvgIcon,
-	Button,
-	Tooltip,
-	Badge,
-} from '@mui/material';
+import { AppBar, Toolbar, Box, SvgIcon, Button, Badge } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { SearchField } from '..';
 
 export const Header: FC<THeader> = ({ onSearch }) => {
@@ -62,21 +55,26 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 					</Box>
 					<Toolbar sx={{ padding: '5px' }}>
 						<Box sx={{ padding: '5px' }}>
-							<Tooltip title='Корзина'>
-								<Badge badgeContent={1} color='error'>
-									<Button variant='contained'>Корзина</Button>
+							<Link to='/favorites'>
+								<Badge badgeContent={2} color='error'>
+									<Button variant='contained'>
+										Избранное
+									</Button>
 								</Badge>
-							</Tooltip>
+							</Link>
 						</Box>
 						<Box sx={{ padding: '5px' }}>
-							<Tooltip title='Заказы'>
-								<Button variant='contained'>Заказы</Button>
-							</Tooltip>
+							<Badge badgeContent={1} color='error'>
+								<Button variant='contained'>Корзина</Button>
+							</Badge>
 						</Box>
 						<Box sx={{ padding: '5px' }}>
-							<Tooltip title='Профиль'>
+							<Button variant='contained'>Заказы</Button>
+						</Box>
+						<Box sx={{ padding: '5px' }}>
+							<Link to='/profile'>
 								<Button variant='contained'>Профиль</Button>
-							</Tooltip>
+							</Link>
 						</Box>
 					</Toolbar>
 				</Toolbar>

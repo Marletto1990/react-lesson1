@@ -1,11 +1,12 @@
 // import { useContext, useEffect, useState } from 'react';
-// import { useLocation } from 'react-router-dom';
-// import { NavBackButton, Spinner } from '../components';
-// import { TUserContext, TUser } from '../../context';
+import { useLocation } from 'react-router-dom';
+import { NavBackButton } from '../../components';
+// import { TUserContext, TUser, TProductsContext } from '../../context';
+import { Favorites } from '../../components/Favorites';
 
 export function FavoritesPage() {
-	// const { state } = useLocation();
-	// const { busy, products } = useContext<TProductsContext>(ProductsContext);
+	const { state } = useLocation();
+	// const { busy, products } = useContext<TProductsContext>({ProductContext});
 	// const [favorites, setFavorites] = useState<number | undefined>();
 
 	// useEffect(() => {
@@ -16,8 +17,9 @@ export function FavoritesPage() {
 
 	return (
 		<>
-			{/* <NavBackButton location={state && state.location} />
-			{busy ? <Spinner /> : <p>{`Избранных товаров: ${favorites}`}</p>} */}
+			<NavBackButton location={state && state.location} />
+			<Favorites />
+			{/* {busy ? <Spinner /> : <p>{`Избранных товаров: ${favorites}`}</p>} */}
 		</>
 	);
 }
