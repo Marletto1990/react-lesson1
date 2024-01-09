@@ -23,13 +23,17 @@ class Api {
 		return `${this.baseUrl}${path}`;
 	}
 
-	getUserInfo() {
+	public getUserInfo() {
 		return fetch(this.getApiUrl('/users/me'), {
 			headers: this.headers,
 		}).then(this.onResponse);
 	}
 
-	getProducts(params?: { page?: number; limit?: number; query?: string }) {
+	public getProducts(params?: {
+		page?: number;
+		limit?: number;
+		query?: string;
+	}) {
 		let path = '/products';
 		if (params) {
 			const { page, limit, query } = params;

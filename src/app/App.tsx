@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
+import { FC, useEffect, useState } from 'react';
+import { api } from '../api';
 import {
 	CataloguePage,
 	ProductPage,
@@ -7,8 +8,25 @@ import {
 	NotFoundPage,
 	FavoritesPage,
 } from '../pages';
+import { ProductsContext, UserContext, TUser } from '../context';
+import { TData } from '../data';
 
-const App = () => {
+const App: FC = () => {
+	const [userData, setUserData] = useState<TUser | null>(null);
+	const [busy, setBusy] = useState<boolean>(true);
+	const [products, setProducts] = useState<TData['products']>([]);
+
+	useEffect(() => {
+		api.getUserInfo().then((p) => {
+			setUserData(p);
+		});
+
+		api.getProducts().then((p) => {
+			setProducts(p);
+			setBusy(false);
+		});
+	}, []);
+
 	const router = createBrowserRouter([
 		{
 			path: '/',
@@ -28,7 +46,13 @@ const App = () => {
 			element: <FavoritesPage />,
 		},
 	]);
-	return <RouterProvider router={router} />;
+	return (
+		<UserContext.Provider value={{ userData }}>
+			<ProductsContext.Provider value={(products, busy)}>
+				<RouterProvider router={router} />
+			</ProductsContext.Provider>
+		</UserContext.Provider>
+	);
 };
 
 export default App;

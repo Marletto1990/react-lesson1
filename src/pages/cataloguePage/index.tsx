@@ -1,21 +1,27 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useContext } from 'react';
 
 import { Catalogue, Header } from '../../components';
 import { TData } from '../../data';
 import { TSortBy } from '../../components/Sorter';
 import { api } from '../../api';
 import { useDebounce } from '../../hooks/useDebouce';
+import {
+	// TUserContext,
+	// TUser,
+	TProductsContext,
+	ProductsContext,
+} from '../../context';
 
 export function CataloguePage() {
 	const MAX_CARD_ON_PAGE = 6;
-	const [busy, setBusy] = useState<boolean>(true);
-	const [items, setItems] = useState<TData['products']>([]);
 	const [count, setCount] = useState<number>(0);
 	const [pagination, setPagination] = useState<number>(1);
 	const [sortBy, setSortBy] = useState<TSortBy>();
 	const [searchBy, setSearchBy] = useState<string>('');
 	const [total, setTotal] = useState<number>(0);
 	const debounceSearchQuery = useDebounce(searchBy, 300);
+	const { busy, products } = useContext<TProductsContext>(ProductsContext);
+	const [items, setItems] = useState<TData['products']>(products);
 
 	const handleRequest = useCallback(
 		function handleRequest() {
@@ -52,7 +58,6 @@ export function CataloguePage() {
 				}
 
 				setItems(sortedData);
-				setBusy(false);
 			});
 		},
 		[pagination, sortBy, debounceSearchQuery]
@@ -64,7 +69,7 @@ export function CataloguePage() {
 
 	return (
 		<>
-			<Header busy={false} onSearch={setSearchBy}></Header>
+			<Header busy={busy} onSearch={setSearchBy}></Header>
 			<Catalogue
 				busy={busy}
 				count={count}

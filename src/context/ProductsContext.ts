@@ -1,15 +1,8 @@
 import { createContext } from 'react';
-
-export type TProduct = {
-	id: string;
-	name: string;
-	price: number;
-	picture: string;
-	isFavorite: boolean;
-};
+import { TProductCard } from '../components/ProductCard';
 
 export type TProductsContext = {
-	products: TProduct[];
+	products: TProductCard[];
 	busy: boolean;
 };
 
