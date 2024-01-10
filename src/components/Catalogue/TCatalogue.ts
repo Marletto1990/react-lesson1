@@ -3,7 +3,7 @@ import { TSortBy } from '../Sorter/TSortBy';
 export type TCatalogue = {
 	busy: boolean;
 	products: TProductCard[];
-	pagination: number;
+	pagination: number | undefined;
 	count: number;
 	total: number;
 	onPressPagination: (value: number) => void;

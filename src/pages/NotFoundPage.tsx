@@ -1,10 +1,11 @@
+import { FC } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { purple } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 
 const primary = purple[500]; // #f44336
 
-export function NotFoundPage() {
+export const NotFoundPage: FC = () => {
 	return (
 		<Box
 			sx={{
@@ -22,4 +23,4 @@ export function NotFoundPage() {
 			</Link>
 		</Box>
 	);
-}
+};

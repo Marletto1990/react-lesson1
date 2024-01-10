@@ -1,8 +1,8 @@
-import { CataloguePage } from './cataloguePage';
-import { NotFoundPage } from './notFoundPage';
-import { ProductPage } from './productPage';
-import { ProfilePage } from './profilePage';
-import { FavoritesPage } from './favoritesPage';
+import { CataloguePage } from './CataloguePage';
+import { NotFoundPage } from './NotFoundPage';
+import { ProductPage } from './ProductPage';
+import { ProfilePage } from './ProfilePage';
+import { FavoritesPage } from './FavoritesPage';
 import { Footer } from '../components';
 
 export {

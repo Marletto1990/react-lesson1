@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import { AppBar, Toolbar, Typography, Box, Link, Stack } from '@mui/material';
 
-export const Footer = () => {
+export const Footer: FC = () => {
 	return (
 		<>
 			<AppBar position='relative' sx={{ top: 'auto', bottom: 0 }}>

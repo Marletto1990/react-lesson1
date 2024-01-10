@@ -5,9 +5,9 @@ export type TUser = {
 };
 
 export type TUserContext = {
-	user: TUser | null;
+	user: TUser;
 };
 
-export const UserContext = createContext<TUserContext | null>(null);
+export const UserContext = createContext<TUserContext>({ user: {} });
 
 UserContext.displayName = 'UserContext';

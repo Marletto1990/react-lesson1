@@ -1,9 +1,10 @@
+import { FC } from 'react';
 import { useLocation } from 'react-router-dom';
-import { NavBackButton } from '../../components';
+import { NavBackButton } from '../components';
 // import { TUserContext, TUser, TProductsContext } from '../../context';
 // import { Favorites } from '../../components/Favorites';
 
-export function ProductPage() {
+export const ProductPage: FC = () => {
 	const { state } = useLocation();
 	return (
 		<>
@@ -11,4 +12,4 @@ export function ProductPage() {
 			<div>Product</div>
 		</>
 	);
-}
+};
