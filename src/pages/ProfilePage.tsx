@@ -9,7 +9,7 @@ export const ProfilePage: FC = () => {
 	return (
 		<>
 			<NavBackButton location={state && state.location} />
-			<p>{`ID пользователя: ${user.id}`}</p>
+			<p>{`ID пользователя: ${user._id}`}</p>
 		</>
 	);
 };

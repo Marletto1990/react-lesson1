@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
 export type TUser = {
-	id?: string;
+	_id?: string;
 };
 
 export type TUserContext = {
