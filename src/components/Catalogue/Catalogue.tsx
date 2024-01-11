@@ -1,20 +1,20 @@
 import { FC } from 'react';
-import { TBodyType } from './TBodyType';
+import { TCatalogue } from './TCatalogue';
 import {
 	Box,
 	Container,
 	CircularProgress,
-	Stack,
 	Pagination,
 	Grid,
+	//Typography,
 } from '@mui/material';
-import { Sorter } from '../Sorter/Sorter';
-import { ProductCard } from '../ProductCard/ProductCard';
+import { Sorter, ProductCard } from '..';
 
-export const Body: FC<TBodyType> = ({
+export const Catalogue: FC<TCatalogue> = ({
 	busy,
 	products,
 	count,
+	//total,
 	onPressPagination,
 	onChangeSort,
 }) => {
@@ -27,6 +27,9 @@ export const Body: FC<TBodyType> = ({
 			) : (
 				<Box sx={{ paddingTop: '7rem', paddingBottom: '10rem' }}>
 					<Sorter onPressSort={onChangeSort} />
+					{/* <Typography variant='h4' component='h2'>
+						Всего: {total}
+					</Typography> */}
 					<Container maxWidth={'lg'}>
 						<Grid
 							container
@@ -35,7 +38,8 @@ export const Body: FC<TBodyType> = ({
 							{products.map((item, i) => (
 								<Grid item key={i}>
 									<ProductCard
-										picture={item.picture}
+										_id={item._id}
+										pictures={item.pictures}
 										price={item.price}
 										name={item.name}
 										discount={item.discount}
@@ -49,9 +53,13 @@ export const Body: FC<TBodyType> = ({
 							))}
 						</Grid>
 					</Container>
-					<Stack
+					<Box
 						alignItems={'center'}
-						sx={{ left: '40%', marginTop: '2rem' }}>
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							marginTop: '2rem',
+						}}>
 						<Pagination
 							onChange={(event, value) =>
 								onPressPagination(value)
@@ -61,7 +69,7 @@ export const Body: FC<TBodyType> = ({
 							size='large'
 							siblingCount={2}
 						/>
-					</Stack>
+					</Box>
 				</Box>
 			)}
 		</>

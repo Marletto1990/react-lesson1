@@ -1,7 +1,7 @@
 import { InputBase } from '@mui/material';
-import { TSearchFieldType } from './TSearchFieldType';
+import { TSearchField } from './TSearchField';
 import { FC } from 'react';
-export const SearchField: FC<TSearchFieldType> = ({ onSearch }) => {
+export const SearchField: FC<TSearchField> = ({ onSearch }) => {
 	return (
 		<>
 			<InputBase

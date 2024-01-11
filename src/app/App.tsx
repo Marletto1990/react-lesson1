@@ -1,76 +1,105 @@
-import { useEffect, useState } from 'react';
-import { Header } from '../components/Header/Header';
-import { Body } from '../components/Body/Body';
-import { Footer } from '../components/Footer/Footer';
-import { TData, dataPromise } from '../data';
-import { TSortByType } from '../components/Sorter/TSortByType';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { api } from '../api';
+import {
+	CataloguePage,
+	ProductPage,
+	ProfilePage,
+	NotFoundPage,
+	FavoritesPage,
+} from '../pages';
+import { ProductsContext, UserContext, TUser } from '../context';
+import { TData } from '../data';
+import { TSortBy } from '../components/Sorter';
+// import { useDebounce } from '../hooks/useDebouce';
 
-const App = () => {
+const App: FC = () => {
 	const MAX_CARD_ON_PAGE = 6;
+	//const [searchBy, setSearchBy] = useState<string>('');
+	//const debounceSearchQuery = useDebounce(searchBy, 300);
+	const [userData, setUserData] = useState<TUser>({});
 	const [busy, setBusy] = useState<boolean>(true);
-	const [items, setItems] = useState<TData[]>([]);
-	const [count, setCount] = useState<number>(0);
-	const [pagination, setPagination] = useState<number>(1);
-	const [sortBy, setSortBy] = useState<TSortByType>();
-	const [searchBy, setSearchBy] = useState<string>('');
+	const [products, setProducts] = useState<TData['products']>([]);
+	//const [count, setCount] = useState<number>(0);
+	//const [total, setTotal] = useState<number>(0);
 
 	useEffect(() => {
-		dataPromise.then((data) => {
-			const searchedData = data.filter((product) =>
-				product.name.includes(searchBy.toLowerCase())
-			);
+		api.getUserInfo().then((p) => {
+			setUserData(p);
+		});
+	}, []);
 
-			setCount(Math.ceil(searchedData.length / MAX_CARD_ON_PAGE));
-
+	const callback: (options: {
+		sortBy: TSortBy;
+		pagination: number | undefined;
+	}) => void = ({ sortBy, pagination }) => {
+		setBusy(true);
+		api.getProducts({
+			// query: debounceSearchQuery || undefined,
+			page: pagination,
+			limit: MAX_CARD_ON_PAGE,
+		}).then((data: TData) => {
+			// setCount(Math.ceil(data.total / MAX_CARD_ON_PAGE));
+			// setTotal(data.total);
 			let sortedData;
 			switch (sortBy) {
 				case 'name':
-					sortedData = searchedData.sort((a, b) => {
+					sortedData = data.products.sort((a, b) => {
 						return a[sortBy]
 							.toLowerCase()
 							.localeCompare(b[sortBy].toLowerCase());
 					});
 					break;
 				case 'discount':
-					sortedData = searchedData.sort((a, b) => {
+					sortedData = data.products.sort((a, b) => {
 						return b[sortBy] - a[sortBy];
 					});
 					break;
 				case 'price':
-					sortedData = searchedData.sort((a, b) => {
+					sortedData = data.products.sort((a, b) => {
 						return a[sortBy] - b[sortBy];
 					});
 					break;
-
 				default:
-					sortedData = searchedData;
+					sortedData = data.products;
 			}
-			// TODO сортировка
-			const lastIndexOfProduct: number = MAX_CARD_ON_PAGE * pagination;
-			const currentPageData: TData[] = sortedData.filter(
-				(p, i) =>
-					lastIndexOfProduct - MAX_CARD_ON_PAGE - 1 < i &&
-					i < lastIndexOfProduct
-			);
-
-			setItems(currentPageData);
+			setProducts(sortedData);
 			setBusy(false);
 		});
-	}, [pagination, sortBy, searchBy]);
+	};
 
+	const router = createBrowserRouter([
+		{
+			path: '/',
+			element: (
+				<CataloguePage
+					//count={count}
+					//total={total}
+					callback={callback}
+					//setSearchBy={setSearchBy}
+				/>
+			),
+			errorElement: <NotFoundPage />,
+		},
+		{
+			path: '/product/:id',
+			element: <ProductPage />,
+		},
+		{
+			path: '/profile',
+			element: <ProfilePage />,
+		},
+		{
+			path: '/favorites',
+			element: <FavoritesPage />,
+		},
+	]);
 	return (
-		<>
-			<Header busy={busy} onSearch={setSearchBy} />
-			<Body
-				busy={busy}
-				count={count}
-				products={items}
-				pagination={pagination}
-				onPressPagination={setPagination}
-				onChangeSort={setSortBy}
-			/>
-			<Footer />
-		</>
+		<UserContext.Provider value={{ user: userData }}>
+			<ProductsContext.Provider value={{ products, busy }}>
+				<RouterProvider router={router} />
+			</ProductsContext.Provider>
+		</UserContext.Provider>
 	);
 };
 

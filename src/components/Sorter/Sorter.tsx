@@ -1,10 +1,11 @@
 import { Button, ButtonGroup, Toolbar } from '@mui/material';
-import { TSorterType } from './TSorterType';
-import { TSortByType } from './TSortByType';
+import { TSorter } from './TSorter';
+import { TSortBy } from './TSortBy';
 import { FC, useState } from 'react';
 
-export const Sorter: FC<TSorterType> = ({ onPressSort }) => {
-	const [sortBy, setSortBy] = useState<TSortByType>();
+export const Sorter: FC<TSorter> = ({ onPressSort }) => {
+	const [sortBy, setSortBy] = useState<TSortBy>();
+
 	return (
 		<Toolbar sx={{ justifyContent: 'center' }}>
 			<ButtonGroup
@@ -13,7 +14,7 @@ export const Sorter: FC<TSorterType> = ({ onPressSort }) => {
 				sx={{ justifyContent: 'stretch', width: '40%' }}>
 				<Button
 					onClick={() => {
-						const sorter: TSortByType = 'price';
+						const sorter: TSortBy = 'price';
 						setSortBy(sorter);
 						onPressSort(sorter);
 					}}
@@ -22,7 +23,7 @@ export const Sorter: FC<TSorterType> = ({ onPressSort }) => {
 				</Button>
 				<Button
 					onClick={() => {
-						const sorter: TSortByType = 'name';
+						const sorter: TSortBy = 'name';
 						setSortBy(sorter);
 						onPressSort(sorter);
 					}}
@@ -31,7 +32,7 @@ export const Sorter: FC<TSorterType> = ({ onPressSort }) => {
 				</Button>
 				<Button
 					onClick={() => {
-						const sorter: TSortByType = 'discount';
+						const sorter: TSortBy = 'discount';
 						setSortBy(sorter);
 						onPressSort(sorter);
 					}}

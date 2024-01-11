@@ -1,4 +1,5 @@
-export type TProductCardType = {
+export type TProductCard = {
+	_id: string;
 	name: string;
 	price: number;
 	discount: number;
@@ -8,5 +9,5 @@ export type TProductCardType = {
 	isCart: boolean;
 	available: boolean;
 	stock: number;
-	picture: string;
+	pictures: string;
 };

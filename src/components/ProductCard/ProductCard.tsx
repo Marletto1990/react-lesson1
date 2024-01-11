@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { TProductCardType } from '../ProductCard/TProductCardType';
+import { TProductCard } from './TProductCard';
 import {
 	Card,
 	CardActions,
@@ -12,13 +12,21 @@ import {
 	Badge,
 	Stack,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-export const ProductCard: FC<TProductCardType> = (props) => {
-	const discount = props.discount ? `-${props.discount}%` : 0;
-	const fullPrice = props.discount
-		? (props.price + (props.price * props.discount) / 100).toFixed(0)
-		: null;
+export const ProductCard: FC<TProductCard> = ({
+	_id,
+	discount,
+	name,
+	price,
+	pictures,
+	wight,
+	description,
+}) => {
+	const discountText = `-${discount}%`;
+	const fullPrice: string = (price + (price * discount) / 100).toFixed(0);
+
 	return (
 		<>
 			<Card sx={{ maxWidth: 345 }}>
@@ -28,23 +36,25 @@ export const ProductCard: FC<TProductCardType> = (props) => {
 							<MoreVertIcon />
 						</IconButton>
 					}
-					title={props.name}
-					subheader={props.wight}
+					title={name}
+					subheader={wight}
 				/>
-				<CardMedia
-					sx={{ height: 120 }}
-					image={props.picture}
-					title={props.name}
-				/>
+				<Link to={`/product/${_id}`}>
+					<CardMedia
+						sx={{ height: 120 }}
+						image={pictures}
+						title={name}
+					/>
+				</Link>
 				<CardContent>
 					<Stack direction='row'>
 						<Typography
 							variant='h5'
 							color='text.error'
 							sx={{ m: 1 }}>
-							{props.price} р
+							{price} р
 						</Typography>
-						{fullPrice && (
+						{discount && (
 							<Typography
 								variant='h5'
 								color='text.error'
@@ -56,19 +66,31 @@ export const ProductCard: FC<TProductCardType> = (props) => {
 								{fullPrice} р
 							</Typography>
 						)}
-						<Badge
-							badgeContent={discount}
-							color='error'
-							sx={{ top: 28, left: 13 }}
-						/>
+						{discount && (
+							<Badge
+								badgeContent={discountText}
+								color='error'
+								sx={{ top: 28, left: 13 }}
+							/>
+						)}
 					</Stack>
-					<Typography variant='body2' color='text.secondary'>
-						{props.description}
+					<Typography
+						sx={{
+							display: '-webkit-box',
+							overflow: 'hidden',
+							WebkitBoxOrient: 'vertical',
+							WebkitLineClamp: 3,
+						}}
+						variant='body2'
+						color='text.secondary'>
+						{description}
 					</Typography>
 				</CardContent>
 				<CardActions>
 					<Button size='small'>Добавить</Button>
-					<Button size='small'>Подробнее</Button>
+					<Link to={`/product/${_id}`}>
+						<Button size='small'>Подробнее</Button>
+					</Link>
 				</CardActions>
 			</Card>
 		</>
