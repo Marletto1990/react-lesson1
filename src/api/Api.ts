@@ -3,6 +3,7 @@ type TConfigApi = {
 	headers: HeadersInit;
 };
 import { config } from './config';
+import { TData } from '../data';
 
 class Api {
 	private baseUrl;
@@ -33,7 +34,7 @@ class Api {
 		page?: number;
 		limit?: number;
 		query?: string;
-	}) {
+	}): Promise<TData> {
 		let path = '/products';
 		if (params) {
 			const { page, limit, query } = params;
