@@ -5,7 +5,7 @@ export type TUserDto = {
 
 export type TUserUpdateDto = Pick<TUserDto, 'name'>;
 
-type TProductDto = {
+export type TProductDto = {
 	_id: string;
 	name: string;
 	price: number;
@@ -29,7 +29,6 @@ type TConfigApi = {
 	headers: HeadersInit;
 };
 import { config } from './config';
-import { TData } from '../data';
 
 export class Api {
 	private baseUrl;
@@ -68,7 +67,7 @@ export class Api {
 		page?: number;
 		limit?: number;
 		query?: string;
-	}): Promise<TData> {
+	}): Promise<TProductsDto> {
 		let path = '/products';
 		if (params) {
 			const { page, limit, query } = params;

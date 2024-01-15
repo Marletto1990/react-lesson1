@@ -4,7 +4,7 @@ import { AppBar, Toolbar, Box, SvgIcon, Button, Badge } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { SearchField } from '..';
 
-export const Header: FC<THeader> = ({ onSearch }) => {
+export const Header: FC<THeader> = () => {
 	return (
 		<>
 			<AppBar
@@ -51,7 +51,7 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 				</Toolbar>
 				<Toolbar sx={{ justifyContent: 'end', width: '50%' }}>
 					<Box>
-						<SearchField onSearch={onSearch} />
+						<SearchField />
 					</Box>
 					<Toolbar sx={{ padding: '5px' }}>
 						<Box sx={{ padding: '5px' }}>

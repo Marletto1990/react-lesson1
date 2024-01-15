@@ -1,8 +1,8 @@
-import { TProductCard } from '../ProductCard/TProductCard';
+import { TProductDto } from '../../api/Api';
 import { TSortBy } from '../Sorter/TSortBy';
 export type TCatalogue = {
 	busy: boolean;
-	products: TProductCard[];
+	products: TProductDto[];
 	pagination: number | undefined;
 	count: number;
 	total: number;

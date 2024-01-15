@@ -1,17 +1,20 @@
 import { SerializedError, createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAppAsyncThunk } from '../../hooks';
 import { TProductsDto } from '../../../api/Api';
 
 type TProductsState = {
-	data: TProductsDto | null;
+	data: TProductsDto;
 	loading: boolean;
 	error: SerializedError | null | unknown;
+	searchValue: string;
 };
 
 const initialState: TProductsState = {
-	data: null,
+	data: { products: [], total: 0 },
 	loading: false,
 	error: null,
+	searchValue: '',
 };
 
 export const sliceName = 'products';
@@ -19,9 +22,32 @@ export const sliceName = 'products';
 export const fetchProducts = createAppAsyncThunk<TProductsDto>(
 	`${sliceName}/products`,
 	async function (_, { fulfillWithValue, rejectWithValue, extra: api }) {
+		const data = await api.getProducts();
 		try {
-			const data = await api.getProducts();
-			return fulfillWithValue(data);
+			if (data && data.products) {
+				return fulfillWithValue(data);
+			} else {
+				return rejectWithValue(data);
+			}
+		} catch (error) {
+			return rejectWithValue(error);
+		}
+	}
+);
+
+export const searchProducts = createAppAsyncThunk<
+	TProductsDto,
+	{ page: number; limit: number; query: string }
+>(
+	`${sliceName}/products`,
+	async function (query, { fulfillWithValue, rejectWithValue, extra: api }) {
+		const data = await api.getProducts(query);
+		try {
+			if (data && data.products) {
+				return fulfillWithValue(data);
+			} else {
+				return rejectWithValue(data);
+			}
 		} catch (error) {
 			return rejectWithValue(error);
 		}
@@ -31,7 +57,11 @@ export const fetchProducts = createAppAsyncThunk<TProductsDto>(
 export const productsSlice = createSlice({
 	name: sliceName,
 	initialState,
-	reducers: {},
+	reducers: {
+		setSearchValue: (state, action: PayloadAction<string>) => {
+			state.searchValue = action.payload;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchProducts.pending, (state) => {

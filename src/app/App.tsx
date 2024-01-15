@@ -8,13 +8,12 @@ import {
 	NotFoundPage,
 	FavoritesPage,
 } from '../pages';
-// import { TData } from '../data';
 // import { TSortBy } from '../components/Sorter';
 // import { useAppSelector } from '../storage/hooks';
 // import { selectUser } from '../storage/reducers/user/selectors';
 import { fetchUser } from '../storage/reducers/user/user-slice';
 import { useAppDispatch } from '../storage/hooks';
-import { fetchProducts } from '../storage/reducers/product/products-slice';
+import { fetchProducts } from '../storage/reducers/products/products-slice';
 
 const App: FC = () => {
 	const dispatch = useAppDispatch();

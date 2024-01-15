@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { TData } from '../data';
+import { TProductDto } from '../api/Api';
 export const useApi = (
-	handler: () => Promise<TData>
-): { data: TData; loading: boolean; error?: Error } => {
-	const [data, setData] = useState<TData>();
+	handler: () => Promise<TProductDto>
+): { data: TProductDto; loading: boolean; error?: Error } => {
+	const [data, setData] = useState<TProductDto>();
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<Error>();
 	useEffect(() => {
