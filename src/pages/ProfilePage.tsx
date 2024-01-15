@@ -1,15 +1,25 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { useLocation } from 'react-router';
 import { NavBackButton } from '../components';
-import { TUserContext, UserContext } from '../context';
+import { useAppSelector } from '../storage/hooks';
+import {
+	selectUser,
+	selectUserLoading,
+} from '../storage/reducers/user/selectors';
 
 export const ProfilePage: FC = () => {
 	const { state } = useLocation();
-	const { user } = useContext<TUserContext>(UserContext);
+	const user = useAppSelector(selectUser);
+	const busy = useAppSelector(selectUserLoading);
 	return (
 		<>
 			<NavBackButton location={state && state.location} />
-			<p>{`ID пользователя: ${user._id}`}</p>
+			{busy ? (
+				<p>123</p>
+			) : (
+				<p>{`ID пользователя: ${user && user.name ? user.name : 0}`}</p>
+			)}
+			{/* <p>{'ID пользователя:'}</p> */}
 		</>
 	);
 };

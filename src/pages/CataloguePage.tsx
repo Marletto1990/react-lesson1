@@ -1,13 +1,7 @@
-import { useEffect, useState, useContext, FC } from 'react';
+import { useEffect, useState, FC } from 'react';
 
 import { Catalogue, Header } from '../components';
 import { TSortBy } from '../components/Sorter';
-import {
-	// TUserContext,
-	// TUser,
-	TProductsContext,
-	ProductsContext,
-} from '../context';
 
 type TCataloguePageProps = {
 	callback: (options: {
@@ -19,7 +13,7 @@ type TCataloguePageProps = {
 export const CataloguePage: FC<TCataloguePageProps> = ({ callback }) => {
 	const [sortBy, setSortBy] = useState<TSortBy>('name');
 	const [pagination, setPagination] = useState<number | undefined>(undefined);
-	const { busy, products } = useContext<TProductsContext>(ProductsContext);
+	//const { busy, products }
 
 	useEffect(
 		() =>
@@ -34,7 +28,7 @@ export const CataloguePage: FC<TCataloguePageProps> = ({ callback }) => {
 	return (
 		<>
 			<Header
-				busy={busy}
+				busy={false}
 				onSearch={() => {
 					console.log(
 						'поиск временно отключен, не смог с ним реализовать контекст'
@@ -42,9 +36,9 @@ export const CataloguePage: FC<TCataloguePageProps> = ({ callback }) => {
 				}}></Header>
 			<Catalogue
 				pagination={pagination}
-				busy={busy}
+				busy={false}
 				count={5}
-				products={products}
+				products={[]}
 				onPressPagination={setPagination}
 				onChangeSort={setSortBy}
 				total={12}

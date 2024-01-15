@@ -1,3 +1,10 @@
+export type TUserDto = {
+	_id: string;
+	name: string;
+};
+
+export type TUserUpdateDto = Pick<TUserDto, 'name'>;
+
 type TConfigApi = {
 	baseUrl: string;
 	headers: HeadersInit;
@@ -5,7 +12,7 @@ type TConfigApi = {
 import { config } from './config';
 import { TData } from '../data';
 
-class Api {
+export class Api {
 	private baseUrl;
 	private headers;
 
@@ -27,6 +34,14 @@ class Api {
 	public getUserInfo() {
 		return fetch(this.getApiUrl('/users/me'), {
 			headers: this.headers,
+		}).then(this.onResponse);
+	}
+
+	public setUserInfo(userData: TUserUpdateDto) {
+		return fetch(this.getApiUrl('/users/me'), {
+			method: 'PATCH',
+			headers: this.headers,
+			body: JSON.stringify(userData),
 		}).then(this.onResponse);
 	}
 

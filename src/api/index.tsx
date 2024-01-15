@@ -1,3 +1,4 @@
-import { api } from './Api';
+import { api, Api } from './Api';
+import { isActionPending, isActionFulfilled, isActionRejected } from './redux';
 
-export { api };
+export { api, Api, isActionPending, isActionFulfilled, isActionRejected };

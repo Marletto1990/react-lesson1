@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import { counterReducer } from '../actions/counterActions';
+import { counterSlice } from './counter/counter-slice';
+import { userSlice } from './user/user-slice';
 
 export const rootReducer = combineReducers({
-	counter: counterReducer,
+	counter: counterSlice.reducer,
+	user: userSlice.reducer,
 });
