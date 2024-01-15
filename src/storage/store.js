@@ -1,12 +1,15 @@
-import { applyMiddleware, createStore } from 'redux';
 import { rootReducer } from './reducers/rootReducer';
-import { composeWithDevTools } from '@redux-devtools/extension';
+import { configureStore } from '@reduxjs/toolkit';
+import { api } from '../api';
 
-const store = createStore(
-	rootReducer,
-	composeWithDevTools(
-		applyMiddleware()
-		// other store enhancers if any
-	)
-);
+const store = configureStore({
+	reducer: rootReducer,
+	devTools: process.env.NODE_ENV !== 'production',
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			thunk: {
+				extraArgument: api,
+			},
+		}),
+});
 export { store };

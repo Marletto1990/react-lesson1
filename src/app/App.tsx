@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { api } from '../api';
 import {
 	CataloguePage,
@@ -8,32 +8,41 @@ import {
 	NotFoundPage,
 	FavoritesPage,
 } from '../pages';
-import { ProductsContext, UserContext, TUser } from '../context';
 import { TData } from '../data';
 import { TSortBy } from '../components/Sorter';
+// import { useAppSelector } from '../storage/hooks';
+// import { selectUser } from '../storage/reducers/user/selectors';
+import { fetchUser } from '../storage/reducers/user/user-slice';
+import { useAppDispatch } from '../storage/hooks';
 // import { useDebounce } from '../hooks/useDebouce';
 
 const App: FC = () => {
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(fetchUser());
+	}, [dispatch]);
+
 	const MAX_CARD_ON_PAGE = 6;
 	//const [searchBy, setSearchBy] = useState<string>('');
 	//const debounceSearchQuery = useDebounce(searchBy, 300);
-	const [userData, setUserData] = useState<TUser>({});
-	const [busy, setBusy] = useState<boolean>(true);
-	const [products, setProducts] = useState<TData['products']>([]);
+	// const [userData, setUserData] = useState<TUser>({});
+	// const [busy, setBusy] = useState<boolean>(true);
+	// const [products, setProducts] = useState<TData['products']>([]);
 	//const [count, setCount] = useState<number>(0);
 	//const [total, setTotal] = useState<number>(0);
 
-	useEffect(() => {
-		api.getUserInfo().then((p) => {
-			setUserData(p);
-		});
-	}, []);
+	// useEffect(() => {
+	// 	api.getUserInfo().then((p) => {
+	// 		setUserData(p);
+	// 	});
+	// }, []);
 
 	const callback: (options: {
 		sortBy: TSortBy;
 		pagination: number | undefined;
 	}) => void = ({ sortBy, pagination }) => {
-		setBusy(true);
+		// setBusy(true);
 		api.getProducts({
 			// query: debounceSearchQuery || undefined,
 			page: pagination,
@@ -63,8 +72,9 @@ const App: FC = () => {
 				default:
 					sortedData = data.products;
 			}
-			setProducts(sortedData);
-			setBusy(false);
+			console.log(sortedData);
+			// setProducts(sortedData);
+			// setBusy(false);
 		});
 	};
 
@@ -94,13 +104,7 @@ const App: FC = () => {
 			element: <FavoritesPage />,
 		},
 	]);
-	return (
-		<UserContext.Provider value={{ user: userData }}>
-			<ProductsContext.Provider value={{ products, busy }}>
-				<RouterProvider router={router} />
-			</ProductsContext.Provider>
-		</UserContext.Provider>
-	);
+	return <RouterProvider router={router} />;
 };
 
 export default App;

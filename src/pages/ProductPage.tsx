@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	incrementAction,
 	decrementAction,
-} from '../storage/reducers/counterReducers';
+} from '../storage/reducers/counter/counter-slice';
 
 export const ProductPage: FC = () => {
 	const { state } = useLocation();
@@ -17,8 +17,9 @@ export const ProductPage: FC = () => {
 	const decrement = () => {
 		dispatch(decrementAction(1));
 	};
-	const counter = useSelector((state: any) => state.counter);
-	debugger;
+	const counter = useSelector(
+		(state: { counter: { value: number } }) => state.counter
+	);
 	return (
 		<>
 			<NavBackButton location={state && state.location} />
