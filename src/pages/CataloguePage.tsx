@@ -29,7 +29,6 @@ export const CataloguePage: FC = () => {
 		dispatch(
 			searchProducts({
 				query: value,
-				limit: MAX_CARD_ON_PAGE,
 				sortBy: sortBy,
 			})
 		);
