@@ -1,28 +1,21 @@
 import { InputBase } from '@mui/material';
-import { FC, useEffect, useState } from 'react';
-import { useAppDispatch } from '../../storage/hooks';
-import { searchProducts } from '../../storage/reducers/products/products-slice';
-import { useDebounce } from '../../hooks/useDebouce';
+import { FC } from 'react';
 
-export const SearchField: FC = () => {
-	const [query, setQuery] = useState('');
-	const debounceQuerqy = useDebounce(
-		{ limit: 2, query: query, page: 1 },
-		1500
-	);
-	const dispatch = useAppDispatch();
-
-	useEffect(() => {
-		// TODO: разобраться почему вызов в цикле
-		dispatch(searchProducts(debounceQuerqy));
-	}, [debounceQuerqy]);
+type TSearchField = {
+	onSearch: (value: string) => void;
+};
+export const SearchField: FC<TSearchField> = ({ onSearch }) => {
+	// const handleSearch: ChangeEventHandler<
+	// 	HTMLInputElement | HTMLTextAreaElement
+	// > = (event) => {
+	// 	debugger;
+	// 	return onSearch;
+	// };
 
 	return (
 		<>
 			<InputBase
-				onChange={(event) => {
-					setQuery(event.target.value);
-				}}
+				onChange={(event) => onSearch(event.target.value)}
 				sx={{
 					background: 'white',
 					width: 400,
