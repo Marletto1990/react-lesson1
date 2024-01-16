@@ -15,6 +15,7 @@ import { TProductDto } from '../api/Api';
 export const CataloguePage: FC = () => {
 	const MAX_CARD_ON_PAGE = 6;
 	const dispatch = useAppDispatch();
+	const [items, setItems] = useState<TProductDto[]>([]);
 	const [pagination, setPagination] = useState<number>(1);
 	const [count, setCount] = useState<number>(0);
 	const [total, setTotal] = useState<number>(0);
@@ -41,19 +42,23 @@ export const CataloguePage: FC = () => {
 			p.name.toLowerCase().includes(searchValue.toLowerCase())
 	);
 
-	const lastIndexOfProduct: number = MAX_CARD_ON_PAGE * pagination;
-	const currentPageData: TProductDto[] = searchedAndSortedProducts.filter(
-		(p, i) =>
-			lastIndexOfProduct - MAX_CARD_ON_PAGE - 1 < i &&
-			i < lastIndexOfProduct
-	);
-	// TODO: pagination & sorting
+	// pagination & sorting
+	useEffect(() => {
+		const lastIndexOfProduct: number = MAX_CARD_ON_PAGE * pagination;
+		const currentPageData: TProductDto[] = searchedAndSortedProducts.filter(
+			(p, i) =>
+				lastIndexOfProduct - MAX_CARD_ON_PAGE - 1 < i &&
+				i < lastIndexOfProduct
+		);
+		setItems(currentPageData);
+	}, [pagination, searchedAndSortedProducts]);
+
 	useEffect(() => {
 		setCount(
 			Math.ceil(searchedAndSortedProducts.length / MAX_CARD_ON_PAGE)
 		);
 		setTotal(searchedAndSortedProducts.length);
-	}, [searchedAndSortedProducts.length]);
+	}, [searchedAndSortedProducts]);
 
 	return (
 		<>
@@ -62,7 +67,7 @@ export const CataloguePage: FC = () => {
 				pagination={pagination}
 				busy={busy}
 				count={count}
-				products={currentPageData}
+				products={items}
 				onPressPagination={setPagination}
 				onChangeSort={setSortBy}
 				total={total}
