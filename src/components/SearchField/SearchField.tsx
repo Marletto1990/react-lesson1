@@ -1,13 +1,21 @@
 import { InputBase } from '@mui/material';
-import { TSearchField } from './TSearchField';
 import { FC } from 'react';
+
+type TSearchField = {
+	onSearch: (value: string) => void;
+};
 export const SearchField: FC<TSearchField> = ({ onSearch }) => {
+	// const handleSearch: ChangeEventHandler<
+	// 	HTMLInputElement | HTMLTextAreaElement
+	// > = (event) => {
+	// 	debugger;
+	// 	return onSearch;
+	// };
+
 	return (
 		<>
 			<InputBase
-				onChange={(event) => {
-					onSearch(event.target.value);
-				}}
+				onChange={(event) => onSearch(event.target.value)}
 				sx={{
 					background: 'white',
 					width: 400,
