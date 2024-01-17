@@ -45,11 +45,11 @@ export const fetchProducts = createAppAsyncThunk<TProductsDto>(
 // Поиск продуктов с учетом сортировки
 export const searchProducts = createAppAsyncThunk<
 	TProductsDto,
-	{ page?: number; limit?: number; query: string; sortBy: TSortBy }
+	{ page: number; limit: number; query: string; sortBy: TSortBy }
 >(
 	`${sliceName}/products`,
 	async function (query, { fulfillWithValue, rejectWithValue, extra: api }) {
-		const data = await api.getProducts(query);
+		const data = await api.getProducts({ query: query.query });
 		try {
 			if (data && data.products) {
 				switch (query.sortBy) {
@@ -64,8 +64,8 @@ export const searchProducts = createAppAsyncThunk<
 					case 'discount':
 						data.products = data.products.sort((a, b) => {
 							return (
-								(b[query.sortBy] as number) -
-								(a[query.sortBy] as number)
+								(a[query.sortBy] as number) -
+								(b[query.sortBy] as number)
 							);
 						});
 					case 'price':
@@ -78,6 +78,15 @@ export const searchProducts = createAppAsyncThunk<
 					default:
 						break;
 				}
+
+				const lastIndexOfProduct: number = query.limit * query.page;
+
+				data.products = data.products.filter(
+					(_, i: number) =>
+						lastIndexOfProduct - query.limit - 1 < i &&
+						i < lastIndexOfProduct
+				);
+
 				return fulfillWithValue(data);
 			} else {
 				return rejectWithValue(data);

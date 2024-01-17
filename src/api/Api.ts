@@ -91,6 +91,14 @@ export class Api {
 		}).then(this.onResponse);
 	}
 
+	public getProduct(productId: string) {
+		return fetch(this.getApiUrl(`/products/${productId}`), {
+			method: 'GET',
+			headers: this.headers,
+			body: JSON.stringify(productId),
+		}).then(this.onResponse);
+	}
+
 	public deleteProduct(productId: TProductDeleteDto['_id']) {
 		return fetch(this.getApiUrl(`/products/${productId}`), {
 			method: 'DELETE',
