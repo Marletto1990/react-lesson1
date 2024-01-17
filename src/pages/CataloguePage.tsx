@@ -1,4 +1,4 @@
-import { useState, FC } from 'react';
+import { useState, useEffect, FC } from 'react';
 
 import { Catalogue, Header } from '../components';
 import { TSortBy } from '../components/Sorter';
@@ -10,22 +10,13 @@ import {
 	selectProductsLoading,
 	selectSearchValue,
 } from '../storage/reducers/products/selectors';
+import { TProductDto } from '../api/Api';
 
-// import { TProductsDto } from '../api/Api';
-
-type TCataloguePageProps = {
-	// TODO: прокинуть user
-	// callback: (options: {
-	// 	sortBy: TSortBy;
-	// 	pagination: number | undefined;
-	// }) => void;
-	// onSearch: () => void;
-};
-
-export const CataloguePage: FC<TCataloguePageProps> = () => {
+export const CataloguePage: FC = () => {
 	const MAX_CARD_ON_PAGE = 6;
 	const dispatch = useAppDispatch();
-	const [pagination, setPagination] = useState<number | undefined>(undefined);
+	const [items, setItems] = useState<TProductDto[]>([]);
+	const [pagination, setPagination] = useState<number>(1);
 	const [count, setCount] = useState<number>(0);
 	const [total, setTotal] = useState<number>(0);
 	const [sortBy, setSortBy] = useState<TSortBy>('name');
@@ -38,16 +29,10 @@ export const CataloguePage: FC<TCataloguePageProps> = () => {
 		dispatch(
 			searchProducts({
 				query: value,
-				limit: MAX_CARD_ON_PAGE,
 				sortBy: sortBy,
 			})
 		);
 	};
-
-	// TODO: pagination & sorting
-	// useEffect(() => {
-
-	// }, [sortBy, pagination]);
 
 	const searchValue = useAppSelector(selectSearchValue);
 	const searchedAndSortedProducts = products.filter(
@@ -56,8 +41,23 @@ export const CataloguePage: FC<TCataloguePageProps> = () => {
 			p.name.toLowerCase().includes(searchValue.toLowerCase())
 	);
 
-	setCount(Math.ceil(searchedAndSortedProducts.length / MAX_CARD_ON_PAGE));
-	setTotal(searchedAndSortedProducts.length);
+	// pagination & sorting
+	useEffect(() => {
+		const lastIndexOfProduct: number = MAX_CARD_ON_PAGE * pagination;
+		const currentPageData: TProductDto[] = searchedAndSortedProducts.filter(
+			(p, i) =>
+				lastIndexOfProduct - MAX_CARD_ON_PAGE - 1 < i &&
+				i < lastIndexOfProduct
+		);
+		setItems(currentPageData);
+	}, [pagination, searchedAndSortedProducts]);
+
+	useEffect(() => {
+		setCount(
+			Math.ceil(searchedAndSortedProducts.length / MAX_CARD_ON_PAGE)
+		);
+		setTotal(searchedAndSortedProducts.length);
+	}, [searchedAndSortedProducts]);
 
 	return (
 		<>
@@ -66,7 +66,7 @@ export const CataloguePage: FC<TCataloguePageProps> = () => {
 				pagination={pagination}
 				busy={busy}
 				count={count}
-				products={searchedAndSortedProducts}
+				products={items}
 				onPressPagination={setPagination}
 				onChangeSort={setSortBy}
 				total={total}

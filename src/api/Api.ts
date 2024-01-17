@@ -1,9 +1,12 @@
 export type TUserDto = {
 	_id: string;
 	name: string;
+	mail: string;
 };
 
 export type TUserUpdateDto = Pick<TUserDto, 'name'>;
+
+export type TUserDeleteDto = Pick<TUserDto, '_id'>;
 
 export type TProductDto = {
 	_id: string;
@@ -81,6 +84,14 @@ export class Api {
 		}
 		return fetch(this.getApiUrl(path), {
 			headers: this.headers,
+		}).then(this.onResponse);
+	}
+
+	public deleteProduct(productId: TUserDeleteDto) {
+		return fetch(this.getApiUrl('/users/me'), {
+			method: 'DELETE',
+			headers: this.headers,
+			body: JSON.stringify(productId),
 		}).then(this.onResponse);
 	}
 }
