@@ -10,6 +10,7 @@ import {
 import { fetchUser } from '../storage/reducers/user/user-slice';
 import { useAppDispatch } from '../storage/hooks';
 import { searchProducts } from '../storage/reducers/products/products-slice';
+import { SignUpPage } from '../pages/SignUpPage';
 
 const App: FC = () => {
 	const dispatch = useAppDispatch();
@@ -38,6 +39,10 @@ const App: FC = () => {
 		{
 			path: '/favorites',
 			element: <FavoritesPage />,
+		},
+		{
+			path: '/signup',
+			element: <SignUpPage />,
 		},
 	]);
 	return <RouterProvider router={router} />;

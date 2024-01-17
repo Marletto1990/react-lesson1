@@ -76,6 +76,11 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 								<Button variant='contained'>Профиль</Button>
 							</Link>
 						</Box>
+						<Box sx={{ padding: '5px' }}>
+							<Link to='/signup'>
+								<Button variant='contained'>Войти</Button>
+							</Link>
+						</Box>
 					</Toolbar>
 				</Toolbar>
 			</AppBar>
