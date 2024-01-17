@@ -1,7 +1,7 @@
 import { SerializedError, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAppAsyncThunk } from '../../hooks';
-import { TProductsDto } from '../../../api/Api';
+import { TProductsDto, TUserDeleteDto } from '../../../api/Api';
 import { TSortBy } from '../../../components/Sorter';
 
 type TProductsState = {
@@ -71,6 +71,25 @@ export const searchProducts = createAppAsyncThunk<
 					default:
 						break;
 				}
+				return fulfillWithValue(data);
+			} else {
+				return rejectWithValue(data);
+			}
+		} catch (error) {
+			return rejectWithValue(error);
+		}
+	}
+);
+
+export const deleteProduct = createAppAsyncThunk<
+	TUserDeleteDto,
+	{ _id: string }
+>(
+	`${sliceName}/deleteProduct`,
+	async function (query, { fulfillWithValue, rejectWithValue, extra: api }) {
+		const data = await api.deleteProduct(query);
+		try {
+			if (data) {
 				return fulfillWithValue(data);
 			} else {
 				return rejectWithValue(data);
