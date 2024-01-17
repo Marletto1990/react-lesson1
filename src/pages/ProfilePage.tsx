@@ -1,25 +1,97 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useLocation } from 'react-router';
 import { NavBackButton } from '../components';
 import { useAppSelector } from '../storage/hooks';
 import {
 	selectUser,
-	selectUserLoading,
+	// selectUserLoading,
 } from '../storage/reducers/user/selectors';
+import {
+	Box,
+	Button,
+	Container,
+	Stack,
+	TextField,
+	Typography,
+} from '@mui/material';
 
 export const ProfilePage: FC = () => {
 	const { state } = useLocation();
 	const user = useAppSelector(selectUser);
-	const busy = useAppSelector(selectUserLoading);
+	// const busy = useAppSelector(selectUserLoading);
+	const [isEditMode, setIsEditMode] = useState<boolean>(false);
 	return (
 		<>
 			<NavBackButton location={state && state.location} />
-			{busy ? (
+			{/* {busy ? (
 				<p>123</p>
 			) : (
-				<p>{`ID пользователя: ${user && user.name ? user.name : 0}`}</p>
+				<p>{`ID пользователя: ${
+					user && user.name ? user.name : 'Данные загружаются...'
+				}`}</p>
+			)} */}
+			{user ? (
+				<Box position={'absolute'} sx={{ left: '40%', top: '30%' }}>
+					<Container maxWidth='lg'>
+						{isEditMode ? (
+							<Stack
+								sx={{ mb: 2 }}
+								direction='column'
+								spacing={2}>
+								<TextField
+									value={'Поле для редактирования'}
+									onChange={() => {
+										console.log();
+									}}
+									sx={{ width: '20rem' }}
+									label='Имя'
+									variant='outlined'
+								/>
+								<TextField
+									value={'Поле для редактирования'}
+									onChange={() => {
+										console.log();
+									}}
+									sx={{ width: '20rem' }}
+									label='Почта'
+									variant='outlined'
+								/>
+							</Stack>
+						) : (
+							<>
+								{/* <img
+								height='200px'
+								src={user.avatar}
+								alt={user.name}
+							/> */}
+								<Typography variant='h3' sx={{ mb: 2 }}>
+									{`${user.name}`}
+								</Typography>
+								<Typography variant='h3' sx={{ mb: 2 }}>
+									{`${
+										user.mail
+											? user.mail
+											: 'почта не указана'
+									}`}
+								</Typography>
+							</>
+						)}
+
+						<Button
+							variant='contained'
+							sx={{ mb: 2 }}
+							onClick={() => {
+								setIsEditMode(!isEditMode);
+							}}>
+							{`${isEditMode ? 'Сохранить' : 'Редактировать'}`}
+						</Button>
+					</Container>
+				</Box>
+			) : (
+				<Box position={'absolute'} sx={{ left: '40%', top: '30%' }}>
+					<Typography>Требуется авторизация</Typography>
+				</Box>
 			)}
-			{/* <p>{'ID пользователя:'}</p> */}
 		</>
 	);
 };
