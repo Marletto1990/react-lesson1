@@ -9,14 +9,16 @@ import {
 } from '../pages';
 import { fetchUser } from '../storage/reducers/user/user-slice';
 import { useAppDispatch } from '../storage/hooks';
-import { fetchProducts } from '../storage/reducers/products/products-slice';
+import { searchProducts } from '../storage/reducers/products/products-slice';
 
 const App: FC = () => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		dispatch(fetchUser());
-		dispatch(fetchProducts());
+		dispatch(
+			searchProducts({ page: 1, limit: 6, query: '', sortBy: 'name' })
+		);
 	}, [dispatch]);
 
 	const router = createBrowserRouter([

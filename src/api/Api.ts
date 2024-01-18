@@ -8,6 +8,8 @@ export type TUserUpdateDto = Pick<TUserDto, 'name'>;
 
 export type TUserDeleteDto = Pick<TUserDto, '_id'>;
 
+export type TFavoritesDto = Pick<TProductDto, '_id'>;
+
 export type TProductDto = {
 	_id: string;
 	name: string;
@@ -21,6 +23,8 @@ export type TProductDto = {
 	stock: number;
 	pictures: string;
 };
+
+export type TProductDeleteDto = Pick<TProductDto, '_id'>;
 
 export type TProductsDto = {
 	products: TProductDto[];
@@ -87,8 +91,32 @@ export class Api {
 		}).then(this.onResponse);
 	}
 
-	public deleteProduct(productId: TUserDeleteDto) {
-		return fetch(this.getApiUrl('/users/me'), {
+	public getProduct(productId: string) {
+		return fetch(this.getApiUrl(`/products/${productId}`), {
+			method: 'GET',
+			headers: this.headers,
+			body: JSON.stringify(productId),
+		}).then(this.onResponse);
+	}
+
+	public deleteProduct(productId: TProductDeleteDto['_id']) {
+		return fetch(this.getApiUrl(`/products/${productId}`), {
+			method: 'DELETE',
+			headers: this.headers,
+			body: JSON.stringify(productId),
+		}).then(this.onResponse);
+	}
+
+	public addToFavorites(productId: TFavoritesDto['_id']) {
+		return fetch(this.getApiUrl(`/products/likes/${productId}`), {
+			method: 'PUT',
+			headers: this.headers,
+			body: JSON.stringify(productId),
+		}).then(this.onResponse);
+	}
+
+	public deleteFromFavorites(productId: TFavoritesDto['_id']) {
+		return fetch(this.getApiUrl(`/products/likes/${productId}`), {
 			method: 'DELETE',
 			headers: this.headers,
 			body: JSON.stringify(productId),

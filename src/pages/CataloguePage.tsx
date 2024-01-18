@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, FC } from 'react';
 
 import { Catalogue, Header } from '../components';
 import { TSortBy } from '../components/Sorter';
@@ -8,56 +8,53 @@ import { searchProducts } from '../storage/reducers/products/products-slice';
 import {
 	selectProducts,
 	selectProductsLoading,
-	selectSearchValue,
+	// selectSearchValue,
 } from '../storage/reducers/products/selectors';
-import { TProductDto } from '../api/Api';
 
 export const CataloguePage: FC = () => {
 	const MAX_CARD_ON_PAGE = 6;
 	const dispatch = useAppDispatch();
-	const [items, setItems] = useState<TProductDto[]>([]);
 	const [pagination, setPagination] = useState<number>(1);
-	const [count, setCount] = useState<number>(0);
-	const [total, setTotal] = useState<number>(0);
 	const [sortBy, setSortBy] = useState<TSortBy>('name');
+	const [searchBy, setSearchBy] = useState<string>('');
 	const productsData = useAppSelector(selectProducts);
-	const products =
-		productsData && productsData.products ? productsData.products : [];
 	const busy = useAppSelector(selectProductsLoading);
 
 	const onSearch = (value: string) => {
+		setSearchBy(value);
 		dispatch(
 			searchProducts({
 				query: value,
 				sortBy: sortBy,
+				page: 1,
+				limit: MAX_CARD_ON_PAGE,
 			})
 		);
 	};
 
-	const searchValue = useAppSelector(selectSearchValue);
-	const searchedAndSortedProducts = products.filter(
-		(p) =>
-			!searchValue ||
-			p.name.toLowerCase().includes(searchValue.toLowerCase())
-	);
-
-	// pagination & sorting
-	useEffect(() => {
-		const lastIndexOfProduct: number = MAX_CARD_ON_PAGE * pagination;
-		const currentPageData: TProductDto[] = searchedAndSortedProducts.filter(
-			(p, i) =>
-				lastIndexOfProduct - MAX_CARD_ON_PAGE - 1 < i &&
-				i < lastIndexOfProduct
+	const onSort = (value: TSortBy) => {
+		setSortBy(value);
+		dispatch(
+			searchProducts({
+				query: searchBy,
+				sortBy: value,
+				page: pagination,
+				limit: MAX_CARD_ON_PAGE,
+			})
 		);
-		setItems(currentPageData);
-	}, [pagination, searchedAndSortedProducts]);
+	};
 
-	useEffect(() => {
-		setCount(
-			Math.ceil(searchedAndSortedProducts.length / MAX_CARD_ON_PAGE)
+	const onPageChange = (value: number) => {
+		setPagination(value);
+		dispatch(
+			searchProducts({
+				query: searchBy,
+				sortBy: sortBy,
+				page: value,
+				limit: MAX_CARD_ON_PAGE,
+			})
 		);
-		setTotal(searchedAndSortedProducts.length);
-	}, [searchedAndSortedProducts]);
+	};
 
 	return (
 		<>
@@ -65,11 +62,11 @@ export const CataloguePage: FC = () => {
 			<Catalogue
 				pagination={pagination}
 				busy={busy}
-				count={count}
-				products={items}
-				onPressPagination={setPagination}
-				onChangeSort={setSortBy}
-				total={total}
+				count={Math.ceil(productsData.total / MAX_CARD_ON_PAGE)}
+				products={productsData.products}
+				onPressPagination={onPageChange}
+				onChangeSort={onSort}
+				total={productsData.total}
 			/>
 		</>
 	);
