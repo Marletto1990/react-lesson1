@@ -1,23 +1,38 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery } from './config-auth';
+import { TUserDto } from './Api';
+import { ISignUpFormValues } from '../components/forms/SignUpForm/helpers/ISignUpFormValues';
+import { ISignInFormValues } from '../components/forms/SignInForm/helpers/ISignInFormValues';
+
+interface ISingUpResponse {
+	_id: string;
+}
+
+interface ISignInResponse {
+	data: TUserDto;
+	token: string;
+}
 
 export const AuthApi = createApi({
 	reducerPath: 'AuthApi',
 	baseQuery: customBaseQuery,
 	endpoints: (builder) => ({
-		signUp: builder.mutation({
+		signUp: builder.mutation<ISingUpResponse, ISignUpFormValues>({
 			query: (data) => ({
 				url: 'signup',
 				method: 'POST',
 				body: data,
 			}),
 		}),
-		signIn: builder.mutation({
+		signIn: builder.mutation<ISignInResponse, ISignInFormValues>({
 			query: (data) => ({
 				url: 'signin',
 				method: 'POST',
 				body: data,
 			}),
+			// transformResponse: (response: ISignInResponse) => {
+			// функция для мутирования ответа сервера под удобную нам структуру
+			// },
 		}),
 	}),
 });
