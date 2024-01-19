@@ -11,19 +11,18 @@ import {
 } from '@mui/material';
 import { FC } from 'react';
 import { Controller, Resolver, SubmitHandler, useForm } from 'react-hook-form';
-// import { batch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSignInMutation } from '../../../api/AuthApi';
-// import { setToken } from '../../../storage/reducers/auth/authSlice';
-// import { setUser } from '../../../storage/reducers/user/userSlice';
-// import { useAppDispatch } from '../../../storage/types';
-import { ISignInFormValues } from './helpers/TSignInFormValues';
+import { setToken } from '../../../storage/reducers/auth/authSlice';
+import { setUser } from '../../../storage/reducers/user/user-slice';
+import { useAppDispatch } from '../../../storage/types';
+import { ISignInFormValues } from './helpers/ISignInFormValues';
 import { signInFormSchema } from './helpers/validator';
 
 export const SignInForm: FC = () => {
 	const navigate = useNavigate();
-	// const dispatch = useAppDispatch();
+	const dispatch = useAppDispatch();
 	const [signInRequestFn] = useSignInMutation();
 	const {
 		control,
@@ -34,7 +33,7 @@ export const SignInForm: FC = () => {
 			email: '',
 			password: '',
 		},
-		resolver: yupResolver(signInFormSchema) as Resolver<ISignInFormValues>, // иначе конфликтует
+		resolver: yupResolver(signInFormSchema) as Resolver<ISignInFormValues>,
 	});
 
 	const submitHandler: SubmitHandler<ISignInFormValues> = async (values) => {
@@ -43,13 +42,13 @@ export const SignInForm: FC = () => {
 			toast.success('Вы успешно вошли в систему');
 			console.dir(data);
 			console.log(token);
-			// batch(() => {
-			// 	dispatch(setUser(data));
-			// 	dispatch(setToken(token));
-			// });
-			navigate('/');
+			dispatch(setUser(data));
+			dispatch(setToken(token));
+			setTimeout(() => {
+				navigate('/');
+			}, 2000);
 		} catch (error) {
-			toast.error('Не известная ошибка при авторизации пользователя');
+			toast.error('Неизвестная ошибка при авторизации пользователя');
 		}
 	};
 

@@ -1,4 +1,4 @@
-import { SerializedError, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, SerializedError, createSlice } from '@reduxjs/toolkit';
 import { createAppAsyncThunk } from '../../hooks';
 import { TUserUpdateDto, TUserDto } from '../../../api/Api';
 
@@ -55,7 +55,12 @@ export const fetchUser = createAppAsyncThunk<TUserDto>(
 export const userSlice = createSlice({
 	name: sliceName,
 	initialState,
-	reducers: {},
+	reducers: {
+		setUser(state, action: PayloadAction<TUserDto>) {
+			state.data = action.payload;
+			return state;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchUser.pending, (state) => {
@@ -92,3 +97,5 @@ export const userSlice = createSlice({
 		// });
 	},
 });
+
+export const { setUser } = userSlice.actions;

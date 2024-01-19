@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SignUpFormValues } from './helpers/TSignUpFormValues';
+import { ISignUpFormValues } from './helpers/ISignUpFormValues';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Box, Container, TextField, Typography } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -16,13 +16,13 @@ export const SignUpForm: FC = () => {
 		control,
 		handleSubmit,
 		formState: { errors, isSubmitted, isSubmitting, isValid },
-	} = useForm<SignUpFormValues>({
+	} = useForm<ISignUpFormValues>({
 		defaultValues: { email: '', group: '', password: '' },
 		resolver: yupResolver(SignUpFormSchema),
 	});
 
 	const [signUpRequestFn] = useSignUpMutation();
-	const submitHandler: SubmitHandler<SignUpFormValues> = async (values) => {
+	const submitHandler: SubmitHandler<ISignUpFormValues> = async (values) => {
 		try {
 			await signUpRequestFn(values).unwrap();
 			toast.success('Успешная регистрация. Войдите в систему');

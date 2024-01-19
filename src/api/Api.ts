@@ -70,6 +70,18 @@ export class Api {
 		}).then(this.onResponse);
 	}
 
+	// public clearUser = () => {
+	// 	return {
+	// 		_id: '',
+	// 		name: '',
+	// 		about: '',
+	// 		avatar: '',
+	// 		isAdmin: '',
+	// 		email: '',
+	// 		group: '',
+	// 	};
+	// };
+
 	public getProducts(params?: {
 		page?: number;
 		limit?: number;
