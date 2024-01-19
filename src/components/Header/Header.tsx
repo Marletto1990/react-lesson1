@@ -3,8 +3,12 @@ import { THeader } from './THeader';
 import { AppBar, Toolbar, Box, SvgIcon, Button, Badge } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { SearchField } from '..';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../storage/reducers/user/selectors';
 
 export const Header: FC<THeader> = ({ onSearch }) => {
+	const user = useSelector(selectUser);
 	return (
 		<>
 			<AppBar
@@ -65,22 +69,33 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 						</Box>
 						<Box sx={{ padding: '5px' }}>
 							<Badge badgeContent={1} color='error'>
-								<Button variant='contained'>Корзина</Button>
+								<Button
+									variant='contained'
+									onClick={() => {
+										toast.error('Не готово', {
+											position: 'top-right',
+										});
+									}}>
+									Корзина
+								</Button>
 							</Badge>
 						</Box>
 						<Box sx={{ padding: '5px' }}>
 							<Button variant='contained'>Заказы</Button>
 						</Box>
-						<Box sx={{ padding: '5px' }}>
-							<Link to='/profile'>
-								<Button variant='contained'>Профиль</Button>
-							</Link>
-						</Box>
-						<Box sx={{ padding: '5px' }}>
-							<Link to='/signin'>
-								<Button variant='contained'>Вход</Button>
-							</Link>
-						</Box>
+						{user ? (
+							<Box sx={{ padding: '5px' }}>
+								<Link to='/profile'>
+									<Button variant='contained'>Профиль</Button>
+								</Link>
+							</Box>
+						) : (
+							<Box sx={{ padding: '5px' }}>
+								<Link to='/signin'>
+									<Button variant='contained'>Вход</Button>
+								</Link>
+							</Box>
+						)}
 					</Toolbar>
 				</Toolbar>
 			</AppBar>

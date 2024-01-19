@@ -39,16 +39,12 @@ export const SignInForm: FC = () => {
 	const submitHandler: SubmitHandler<ISignInFormValues> = async (values) => {
 		try {
 			const { data, token } = await signInRequestFn(values).unwrap();
-			toast.success('Вы успешно вошли в систему');
-			console.dir(data);
-			console.log(token);
 			dispatch(setUser(data));
 			dispatch(setToken(token));
-			setTimeout(() => {
-				navigate('/');
-			}, 2000);
+			toast.success(`Добро пожаловать, ${data.name}!`);
+			navigate('/');
 		} catch (error) {
-			toast.error('Неизвестная ошибка при авторизации пользователя');
+			toast.error('Ошибка при авторизации пользователя');
 		}
 	};
 
