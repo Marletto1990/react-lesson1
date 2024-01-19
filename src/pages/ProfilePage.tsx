@@ -39,7 +39,7 @@ export const ProfilePage: FC = () => {
 								direction='column'
 								spacing={2}>
 								<TextField
-									value={'Поле для редактирования'}
+									value={user.name}
 									onChange={() => {
 										console.log();
 									}}
@@ -48,7 +48,7 @@ export const ProfilePage: FC = () => {
 									variant='outlined'
 								/>
 								<TextField
-									value={'Поле для редактирования'}
+									value={user.email}
 									onChange={() => {
 										console.log();
 									}}
@@ -69,8 +69,8 @@ export const ProfilePage: FC = () => {
 								</Typography>
 								<Typography variant='h3' sx={{ mb: 2 }}>
 									{`${
-										user.mail
-											? user.mail
+										user.email
+											? user.email
 											: 'почта не указана'
 									}`}
 								</Typography>
