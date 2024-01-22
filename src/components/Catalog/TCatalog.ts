@@ -1,6 +1,6 @@
 import { TProductDto } from '../../api/Api';
 import { TSortBy } from '../Sorter/TSortBy';
-export type TCatalogue = {
+export type TCatalog = {
 	busy: boolean;
 	products: TProductDto[];
 	pagination: number | undefined;

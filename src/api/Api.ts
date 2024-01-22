@@ -1,7 +1,7 @@
 export type TUserDto = {
 	_id: string;
 	name: string;
-	mail: string;
+	email: string;
 };
 
 export type TUserUpdateDto = Pick<TUserDto, 'name'>;

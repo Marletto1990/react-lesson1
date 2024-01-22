@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { FC, useEffect } from 'react';
 import {
-	CataloguePage,
+	CatalogPage,
 	ProductPage,
 	ProfilePage,
 	NotFoundPage,
@@ -26,7 +26,7 @@ const App: FC = () => {
 	const router = createBrowserRouter([
 		{
 			path: '/',
-			element: <CataloguePage />,
+			element: <CatalogPage />,
 			errorElement: <NotFoundPage />,
 		},
 		{
