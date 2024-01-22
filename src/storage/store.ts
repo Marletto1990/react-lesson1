@@ -1,7 +1,8 @@
 import { rootReducer } from './reducers/rootReducer';
 import { configureStore } from '@reduxjs/toolkit';
-import { api } from '../api';
 import { AuthApi } from '../api/AuthApi';
+import { ProductsApi } from '../api/ProductsApi';
+
 import {
 	persistStore,
 	persistReducer,
@@ -19,7 +20,7 @@ const persistConfig = {
 	storage,
 	version: 1,
 	// сетевые данные не сохраняем, добавить в исключения productsApi.reducerPath
-	blacklist: [AuthApi.reducerPath],
+	blacklist: [AuthApi.reducerPath, ProductsApi.reducerPath],
 };
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -29,9 +30,6 @@ const store = configureStore({
 	devTools: process.env.NODE_ENV !== 'production',
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
-			thunk: {
-				extraArgument: api,
-			},
 			serializableCheck: {
 				ignoredActions: [
 					FLUSH,
@@ -42,7 +40,9 @@ const store = configureStore({
 					REGISTER,
 				],
 			},
-		}).concat(AuthApi.middleware),
+		})
+			.concat(AuthApi.middleware)
+			.concat(ProductsApi.middleware),
 });
 
 export const persistor = persistStore(store);

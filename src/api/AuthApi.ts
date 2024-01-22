@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { customBaseQuery } from './config-auth';
-import { TUserDto } from './Api';
+import { customBaseQuery } from './config';
+import { TUserDto } from '../model/model';
 import { ISignUpFormValues } from '../components/forms/SignUpForm/helpers/ISignUpFormValues';
 import { ISignInFormValues } from '../components/forms/SignInForm/helpers/ISignInFormValues';
 

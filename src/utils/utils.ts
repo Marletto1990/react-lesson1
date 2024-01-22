@@ -21,6 +21,7 @@ export const getMessageFromError = (
 	return defaultErrorMessage;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getDisplayName = (WrappedComponent: ComponentType<any>) => {
 	return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 };

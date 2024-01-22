@@ -2,10 +2,7 @@ import { FC, useState } from 'react';
 import { useLocation } from 'react-router';
 import { NavBackButton } from '../components';
 import { useAppSelector } from '../storage/hooks';
-import {
-	selectUser,
-	// selectUserLoading,
-} from '../storage/reducers/user/selectors';
+import { setUser } from '../storage/reducers/root/selectors';
 import {
 	Box,
 	Button,
@@ -17,7 +14,7 @@ import {
 
 export const ProfilePage: FC = () => {
 	const { state } = useLocation();
-	const user = useAppSelector(selectUser);
+	const user = useAppSelector(setUser);
 	// const busy = useAppSelector(selectUserLoading);
 	const [isEditMode, setIsEditMode] = useState<boolean>(false);
 	return (

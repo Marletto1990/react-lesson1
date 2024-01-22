@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TProductDto } from '../api/Api';
+import { TProductDto } from '../model/model';
 export const useApi = (
 	handler: () => Promise<TProductDto>
 ): { data: TProductDto; loading: boolean; error?: Error } => {
