@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { SearchField } from '..';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../../storage/reducers/user/selectors';
+import { setUser } from '../../storage/reducers/root/selectors';
 
 export const Header: FC<THeader> = ({ onSearch }) => {
-	const user = useSelector(selectUser);
+	const user = useSelector(setUser);
 	return (
 		<>
 			<AppBar
