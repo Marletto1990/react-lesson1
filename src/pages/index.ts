@@ -1,4 +1,4 @@
-import { CataloguePage } from './CataloguePage';
+import { CataloguePage } from './CatalogPage';
 import { NotFoundPage } from './NotFoundPage';
 import { ProductPage } from './ProductPage';
 import { ProfilePage } from './ProfilePage';

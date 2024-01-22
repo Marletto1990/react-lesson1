@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { FC } from 'react';
 import { Controller, Resolver, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSignInMutation } from '../../../api/AuthApi';
 import { setToken } from '../../../storage/reducers/auth/authSlice';
@@ -19,8 +19,10 @@ import { setUser } from '../../../storage/reducers/user/user-slice';
 import { useAppDispatch } from '../../../storage/types';
 import { ISignInFormValues } from './helpers/ISignInFormValues';
 import { signInFormSchema } from './helpers/validator';
+import { objectHasProperty } from '../../../utils/utils';
 
 export const SignInForm: FC = () => {
+	const state = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [signInRequestFn] = useSignInMutation();
@@ -42,7 +44,12 @@ export const SignInForm: FC = () => {
 			dispatch(setUser(data));
 			dispatch(setToken(token));
 			toast.success(`Добро пожаловать, ${data.name}!`);
-			navigate('/');
+			navigate(
+				objectHasProperty(state, 'from') &&
+					typeof state.from === 'string'
+					? state.from
+					: '/'
+			);
 		} catch (error) {
 			toast.error('Ошибка при авторизации пользователя');
 		}

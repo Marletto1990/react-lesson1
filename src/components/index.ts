@@ -3,7 +3,7 @@ import { Header } from './Header';
 import { ProductCard } from './ProductCard';
 import { SearchField } from './SearchField';
 import { Sorter } from './Sorter';
-import { Catalogue } from './Catalogue';
+import { Catalog } from './Catalog';
 import { NavBackButton } from './NavBackButton';
 
 export {
@@ -12,6 +12,6 @@ export {
 	ProductCard,
 	SearchField,
 	Sorter,
-	Catalogue,
+	Catalog,
 	NavBackButton,
 };
