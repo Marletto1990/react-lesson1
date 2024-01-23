@@ -1,14 +1,27 @@
 import { FC } from 'react';
 import { THeader } from './THeader';
-import { AppBar, Toolbar, Box, SvgIcon, Button, Badge } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { SearchField } from '..';
-import { toast } from 'react-toastify';
+import {
+	AppBar,
+	Toolbar,
+	Box,
+	SvgIcon,
+	Button,
+	Badge,
+	Avatar,
+	Link,
+} from '@mui/material';
+import { SearchField, ShopCartDialog } from '..';
 import { useSelector } from 'react-redux';
-import { setUser } from '../../storage/reducers/root/selectors';
+import { setUser, setToken } from '../../storage/reducers/root/selectors';
+import { stringAvatar } from '../../utils/utils';
+import { useAppDispatch } from '../../storage/types';
+import { setShopCartOpen } from '../../storage/reducers/root/rootSlice';
 
 export const Header: FC<THeader> = ({ onSearch }) => {
+	const dispatch = useAppDispatch();
 	const user = useSelector(setUser);
+	const accessToken = useSelector(setToken);
+
 	return (
 		<>
 			<AppBar
@@ -59,7 +72,7 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 					</Box>
 					<Toolbar sx={{ padding: '5px' }}>
 						<Box sx={{ padding: '5px' }}>
-							<Link to='/favorites'>
+							<Link href='/favorites'>
 								<Badge badgeContent={2} color='error'>
 									<Button variant='contained'>
 										Избранное
@@ -71,27 +84,22 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 							<Badge badgeContent={1} color='error'>
 								<Button
 									variant='contained'
-									onClick={() => {
-										toast.error('Не готово', {
-											position: 'top-right',
-										});
-									}}>
+									onClick={() =>
+										dispatch(setShopCartOpen(true))
+									}>
 									Корзина
 								</Button>
 							</Badge>
 						</Box>
-						<Box sx={{ padding: '5px' }}>
-							<Button variant='contained'>Заказы</Button>
-						</Box>
-						{user ? (
-							<Box sx={{ padding: '5px' }}>
-								<Link to='/profile'>
-									<Button variant='contained'>Профиль</Button>
+						{accessToken && user ? (
+							<Box sx={{ ml: 5 }}>
+								<Link href='/profile'>
+									<Avatar {...stringAvatar(user.name)} />
 								</Link>
 							</Box>
 						) : (
-							<Box sx={{ padding: '5px' }}>
-								<Link to='/signin'>
+							<Box sx={{ ml: 5 }}>
+								<Link href='/signin'>
 									<Button variant='contained'>Вход</Button>
 								</Link>
 							</Box>
@@ -99,6 +107,7 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 					</Toolbar>
 				</Toolbar>
 			</AppBar>
+			<ShopCartDialog />
 		</>
 	);
 };

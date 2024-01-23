@@ -3,11 +3,18 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ISignUpFormValues } from './helpers/ISignUpFormValues';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Box, Container, TextField, Typography } from '@mui/material';
+import {
+	Avatar,
+	Box,
+	Container,
+	TextField,
+	Typography,
+	Link,
+} from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { SignUpFormSchema } from './helpers/validator';
-import { useSignUpMutation } from '../../../api/AuthApi';
+import { useSignUpMutation } from '../../../storage/api/AuthApi';
 import { toast } from 'react-toastify';
 
 export const SignUpForm: FC = () => {
@@ -28,7 +35,9 @@ export const SignUpForm: FC = () => {
 			toast.success('Успешная регистрация. Войдите в систему');
 			navigate('/signin');
 		} catch (error) {
-			toast.error('Ошибка при регистрации');
+			toast.error('Ошибка при регистрации', {
+				position: 'bottom-right',
+			});
 		}
 	};
 
@@ -45,7 +54,7 @@ export const SignUpForm: FC = () => {
 					<LockOutlinedIcon />
 				</Avatar>
 				<Typography component='h1' variant='h5'>
-					Sign Up
+					{'Зарегистрироваться'}
 				</Typography>
 				<Box
 					component='form'
@@ -61,7 +70,7 @@ export const SignUpForm: FC = () => {
 						render={({ field }) => (
 							<TextField
 								margin='normal'
-								label='Email Address'
+								label='Почта'
 								type='email'
 								fullWidth
 								required
@@ -77,7 +86,7 @@ export const SignUpForm: FC = () => {
 						control={control}
 						render={({ field }) => (
 							<TextField
-								label='Group Id'
+								label='Группа'
 								type='text'
 								margin='normal'
 								error={!!errors.group?.message}
@@ -93,7 +102,7 @@ export const SignUpForm: FC = () => {
 						control={control}
 						render={({ field }) => (
 							<TextField
-								label='Password'
+								label='Пароль'
 								type='password'
 								error={!!errors.password?.message}
 								helperText={errors.password?.message}
@@ -116,6 +125,9 @@ export const SignUpForm: FC = () => {
 						Sign Up
 					</LoadingButton>
 				</Box>
+				<Link href='/' variant={'button'}>
+					{'На Главную'}
+				</Link>
 			</Box>
 		</Container>
 	);

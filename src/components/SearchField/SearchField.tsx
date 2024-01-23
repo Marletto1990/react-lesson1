@@ -5,13 +5,6 @@ type TSearchField = {
 	onSearch: (value: string) => void;
 };
 export const SearchField: FC<TSearchField> = ({ onSearch }) => {
-	// const handleSearch: ChangeEventHandler<
-	// 	HTMLInputElement | HTMLTextAreaElement
-	// > = (event) => {
-	// 	debugger;
-	// 	return onSearch;
-	// };
-
 	return (
 		<>
 			<InputBase

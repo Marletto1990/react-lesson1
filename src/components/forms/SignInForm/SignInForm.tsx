@@ -13,7 +13,7 @@ import { FC } from 'react';
 import { Controller, Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useSignInMutation } from '../../../api/AuthApi';
+import { useSignInMutation } from '../../../storage/api/AuthApi';
 import { setToken, setUser } from '../../../storage/reducers/root/rootSlice';
 import { useAppDispatch } from '../../../storage/types';
 import { ISignInFormValues } from './helpers/ISignInFormValues';
@@ -42,7 +42,9 @@ export const SignInForm: FC = () => {
 			const { data, token } = await signInRequestFn(values).unwrap();
 			dispatch(setUser(data));
 			dispatch(setToken(token));
-			toast.success(`Добро пожаловать, ${data.name}!`);
+			toast.success(`Добро пожаловать, ${data.name}!`, {
+				position: 'bottom-right',
+			});
 			navigate(
 				objectHasProperty(state, 'from') &&
 					typeof state.from === 'string'
@@ -50,7 +52,9 @@ export const SignInForm: FC = () => {
 					: '/'
 			);
 		} catch (error) {
-			toast.error('Ошибка при авторизации пользователя');
+			toast.error('Ошибка при авторизации пользователя', {
+				position: 'bottom-right',
+			});
 		}
 	};
 
@@ -67,7 +71,7 @@ export const SignInForm: FC = () => {
 					<LockOutlinedIcon />
 				</Avatar>
 				<Typography component='h1' variant='h5'>
-					Sign In
+					Войти в аккаунт
 				</Typography>
 				<Box
 					component='form'
@@ -80,7 +84,7 @@ export const SignInForm: FC = () => {
 						render={({ field }) => (
 							<TextField
 								margin='normal'
-								label='Email Address'
+								label='Почта'
 								type='email'
 								fullWidth
 								required
@@ -96,7 +100,7 @@ export const SignInForm: FC = () => {
 						control={control}
 						render={({ field }) => (
 							<TextField
-								label='Password'
+								label='Пароль'
 								type='password'
 								error={!!errors.password?.message}
 								// helperText={errors.password?.message}
@@ -115,10 +119,15 @@ export const SignInForm: FC = () => {
 						fullWidth
 						variant='contained'
 						sx={{ mt: 3, mb: 2 }}>
-						Sign In
+						{'Войти'}
 					</LoadingButton>
 				</Box>
-				<Link href='/signup'>{"Don't have an account? Sign Up!"}</Link>
+				<Link href='/signup' variant={'button'} sx={{ m: 3 }}>
+					{'Регистрация'}
+				</Link>
+				<Link href='/' variant={'button'}>
+					{'На Главную'}
+				</Link>
 			</Box>
 		</Container>
 	);

@@ -29,7 +29,7 @@ export const ProductCard: FC<TProductCard> = ({
 
 	return (
 		<>
-			<Card sx={{ maxWidth: 345 }}>
+			<Card variant='outlined' sx={{ width: 345, height: 400 }}>
 				<CardHeader
 					action={
 						<IconButton aria-label='settings'>
