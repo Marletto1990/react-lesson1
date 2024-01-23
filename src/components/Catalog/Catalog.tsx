@@ -1,22 +1,19 @@
 import { FC } from 'react';
 import { TCatalog } from './TCatalog';
-import { Box, Container, Pagination, Grid, Typography } from '@mui/material';
-import { Sorter, ProductCard } from '..';
+import { Box, Container, Pagination, Grid } from '@mui/material';
+import { ProductCard } from '..';
+import { LimitSelect } from '../LimitSelect/LimitSelect';
 
 export const Catalog: FC<TCatalog> = ({
 	products,
 	count,
 	total,
 	onPressPagination,
-	onChangeSort,
 }) => {
 	return (
 		<>
 			<Box sx={{ paddingTop: '7rem', paddingBottom: '10rem' }}>
-				<Sorter onPressSort={onChangeSort} />
-				<Typography variant='h4' component='h2'>
-					Всего: {total}
-				</Typography>
+				<LimitSelect total={total}></LimitSelect>
 				<Container maxWidth={'lg'}>
 					<Grid
 						container

@@ -13,7 +13,7 @@ import { FC } from 'react';
 import { Controller, Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useSignInMutation } from '../../../api/AuthApi';
+import { useSignInMutation } from '../../../storage/api/AuthApi';
 import { setToken, setUser } from '../../../storage/reducers/root/rootSlice';
 import { useAppDispatch } from '../../../storage/types';
 import { ISignInFormValues } from './helpers/ISignInFormValues';

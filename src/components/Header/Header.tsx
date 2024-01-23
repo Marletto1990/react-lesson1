@@ -1,6 +1,14 @@
 import { FC } from 'react';
 import { THeader } from './THeader';
-import { AppBar, Toolbar, Box, SvgIcon, Button, Badge } from '@mui/material';
+import {
+	AppBar,
+	Toolbar,
+	Box,
+	SvgIcon,
+	Button,
+	Badge,
+	Avatar,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { SearchField } from '..';
 import { toast } from 'react-toastify';
@@ -86,7 +94,12 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 						{user ? (
 							<Box sx={{ padding: '5px' }}>
 								<Link to='/profile'>
-									<Button variant='contained'>Профиль</Button>
+									<Avatar
+										sx={{
+											m: 1,
+											bgcolor: 'secondary.main',
+										}}
+									/>
 								</Link>
 							</Box>
 						) : (

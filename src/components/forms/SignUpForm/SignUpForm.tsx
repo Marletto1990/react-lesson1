@@ -7,7 +7,7 @@ import { Avatar, Box, Container, TextField, Typography } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { SignUpFormSchema } from './helpers/validator';
-import { useSignUpMutation } from '../../../api/AuthApi';
+import { useSignUpMutation } from '../../../storage/api/AuthApi';
 import { toast } from 'react-toastify';
 
 export const SignUpForm: FC = () => {

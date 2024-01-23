@@ -21,10 +21,14 @@ export const rootSlice = createSlice({
 			state.user = action.payload;
 			return state;
 		},
+		clearUser(state, action: PayloadAction<TUserDto>) {
+			state.user = action.payload;
+			return state;
+		},
 		setToken(state, action: PayloadAction<TRootState['accessToken']>) {
 			state.accessToken = action.payload;
 		},
 	},
 });
 
-export const { setUser, setToken } = rootSlice.actions;
+export const { setUser, setToken, clearUser } = rootSlice.actions;

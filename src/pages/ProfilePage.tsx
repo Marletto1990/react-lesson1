@@ -1,12 +1,17 @@
 import { FC, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { NavBackButton } from '../components';
 import { useAppSelector } from '../storage/hooks';
 import { setUser } from '../storage/reducers/root/selectors';
+import DialogTitle from '@mui/material/DialogTitle';
 import {
 	Box,
 	Button,
 	Container,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
 	Stack,
 	TextField,
 	Typography,
@@ -14,21 +19,24 @@ import {
 
 export const ProfilePage: FC = () => {
 	const { state } = useLocation();
+	const navigate = useNavigate();
 	const user = useAppSelector(setUser);
-	// const busy = useAppSelector(selectUserLoading);
 	const [isEditMode, setIsEditMode] = useState<boolean>(false);
+	const [open, setOpen] = useState(false);
+
+	const handleClose = () => {
+		setOpen(false);
+		localStorage.clear();
+		navigate('/signin');
+	};
+
 	return (
 		<>
 			<NavBackButton location={state && state.location} />
-			{/* {busy ? (
-				<p>123</p>
-			) : (
-				<p>{`ID пользователя: ${
-					user && user.name ? user.name : 'Данные загружаются...'
-				}`}</p>
-			)} */}
 			{user ? (
-				<Box position={'absolute'} sx={{ left: '40%', top: '30%' }}>
+				<Box
+					position={'absolute'}
+					sx={{ left: '40%', top: '30%', justifyContent: 'center' }}>
 					<Container maxWidth='lg'>
 						{isEditMode ? (
 							<Stack
@@ -56,11 +64,6 @@ export const ProfilePage: FC = () => {
 							</Stack>
 						) : (
 							<>
-								{/* <img
-								height='200px'
-								src={user.avatar}
-								alt={user.name}
-							/> */}
 								<Typography variant='h3' sx={{ mb: 2 }}>
 									{`${user.name}`}
 								</Typography>
@@ -73,16 +76,45 @@ export const ProfilePage: FC = () => {
 								</Typography>
 							</>
 						)}
-
+					</Container>
+					<Box
+						display={'flex'}
+						flexDirection={'column'}
+						justifyItems={'center'}>
 						<Button
 							variant='contained'
-							sx={{ mb: 2 }}
+							sx={{ m: 'auto', mt: 3 }}
 							onClick={() => {
 								setIsEditMode(!isEditMode);
 							}}>
 							{`${isEditMode ? 'Сохранить' : 'Редактировать'}`}
 						</Button>
-					</Container>
+						<Button
+							variant='contained'
+							sx={{ m: 'auto', mt: 3 }}
+							onClick={() => setOpen(true)}>
+							Выйти
+						</Button>
+					</Box>
+					<Dialog
+						open={open}
+						onClose={() => setOpen(false)}
+						aria-labelledby='responsive-dialog-title'>
+						<DialogTitle id='responsive-dialog-title'>
+							{'Требуется подтверждение'}
+						</DialogTitle>
+						<DialogContent>
+							<DialogContentText>
+								Вый действительно хотите выйти?
+							</DialogContentText>
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={() => setOpen(false)}>
+								Отменить
+							</Button>
+							<Button onClick={handleClose}>Выйти</Button>
+						</DialogActions>
+					</Dialog>
 				</Box>
 			) : (
 				<Box position={'absolute'} sx={{ left: '40%', top: '30%' }}>
