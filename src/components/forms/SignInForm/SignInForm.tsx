@@ -42,7 +42,9 @@ export const SignInForm: FC = () => {
 			const { data, token } = await signInRequestFn(values).unwrap();
 			dispatch(setUser(data));
 			dispatch(setToken(token));
-			toast.success(`Добро пожаловать, ${data.name}!`);
+			toast.success(`Добро пожаловать, ${data.name}!`, {
+				position: 'bottom-right',
+			});
 			navigate(
 				objectHasProperty(state, 'from') &&
 					typeof state.from === 'string'
@@ -50,7 +52,9 @@ export const SignInForm: FC = () => {
 					: '/'
 			);
 		} catch (error) {
-			toast.error('Ошибка при авторизации пользователя');
+			toast.error('Ошибка при авторизации пользователя', {
+				position: 'bottom-right',
+			});
 		}
 	};
 

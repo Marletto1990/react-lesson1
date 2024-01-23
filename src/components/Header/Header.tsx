@@ -8,8 +8,8 @@ import {
 	Button,
 	Badge,
 	Avatar,
+	Link,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
 import { SearchField } from '..';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
@@ -70,7 +70,7 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 					</Box>
 					<Toolbar sx={{ padding: '5px' }}>
 						<Box sx={{ padding: '5px' }}>
-							<Link to='/favorites'>
+							<Link href='/favorites'>
 								<Badge badgeContent={2} color='error'>
 									<Button variant='contained'>
 										Избранное
@@ -84,25 +84,22 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 									variant='contained'
 									onClick={() => {
 										toast.error('Не готово', {
-											position: 'top-right',
+											position: 'bottom-right',
 										});
 									}}>
 									Корзина
 								</Button>
 							</Badge>
 						</Box>
-						<Box sx={{ padding: '5px' }}>
-							<Button variant='contained'>Заказы</Button>
-						</Box>
 						{accessToken && user ? (
-							<Box sx={{ padding: '5px' }}>
-								<Link to='/profile'>
+							<Box sx={{ ml: 5 }}>
+								<Link href='/profile'>
 									<Avatar {...stringAvatar(user.name)} />
 								</Link>
 							</Box>
 						) : (
-							<Box sx={{ padding: '5px' }}>
-								<Link to='/signin'>
+							<Box sx={{ ml: 5 }}>
+								<Link href='/signin'>
 									<Button variant='contained'>Вход</Button>
 								</Link>
 							</Box>

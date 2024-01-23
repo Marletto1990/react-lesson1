@@ -5,6 +5,7 @@ import { SearchField } from './SearchField';
 import { Sorter } from './Sorter';
 import { Catalog } from './Catalog';
 import { NavBackButton } from './NavBackButton';
+import { ShopCartDialog } from './ShopCartDialog';
 
 export {
 	Footer,
@@ -14,4 +15,5 @@ export {
 	Sorter,
 	Catalog,
 	NavBackButton,
+	ShopCartDialog,
 };

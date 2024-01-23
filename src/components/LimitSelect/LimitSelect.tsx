@@ -6,11 +6,14 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { TLimitSelect } from './TLimitSelect';
 
-export const LimitSelect: FC<TLimitSelect> = ({ total }) => {
-	const [limit, setLimit] = useState<number>(10);
+export const LimitSelect: FC<TLimitSelect> = ({
+	total,
+	limit,
+	onLimitChange,
+}) => {
 	return (
 		<Toolbar>
 			<Typography variant='h5' component='h2'>
@@ -24,9 +27,9 @@ export const LimitSelect: FC<TLimitSelect> = ({ total }) => {
 					value={limit}
 					defaultValue={limit}
 					onChange={(event) => {
-						setLimit(event.target.value as number);
+						onLimitChange(event.target.value as number);
 					}}>
-					<MenuItem value={limit}>10</MenuItem>
+					<MenuItem value={10}>10</MenuItem>
 					<MenuItem value={20}>20</MenuItem>
 					<MenuItem value={30}>30</MenuItem>
 				</Select>

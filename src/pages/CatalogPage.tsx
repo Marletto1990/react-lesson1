@@ -7,12 +7,12 @@ import { useGetProductListQuery } from '../storage/api/ProductsApi';
 const CatalogWithQuery = withQuery(Catalog);
 
 export const CatalogPage: FC = () => {
-	const MAX_CARD_ON_PAGE = 6;
+	const [limit, setLimit] = useState<number>(10);
 	const [pagination, setPagination] = useState<number>(1);
 	const [searchBy, setSearchBy] = useState<string>('');
 	const { data, isLoading, isError } = useGetProductListQuery({
 		page: pagination,
-		limit: MAX_CARD_ON_PAGE,
+		limit: limit,
 		query: searchBy,
 	});
 
@@ -24,6 +24,10 @@ export const CatalogPage: FC = () => {
 		setPagination(value);
 	};
 
+	const onLimitChange = (value: number) => {
+		setLimit(value);
+	};
+
 	return (
 		<>
 			<Header busy={isLoading} onSearch={onSearch}></Header>
@@ -31,10 +35,12 @@ export const CatalogPage: FC = () => {
 				isLoading={isLoading}
 				isError={isError}
 				pagination={pagination}
-				count={Math.ceil(data?.total / MAX_CARD_ON_PAGE)}
+				count={Math.ceil(data?.total / limit)}
 				products={data?.products}
 				onPressPagination={onPageChange}
 				total={data?.total}
+				limit={limit}
+				onLimitChange={onLimitChange}
 			/>
 		</>
 	);

@@ -35,7 +35,9 @@ export const SignUpForm: FC = () => {
 			toast.success('Успешная регистрация. Войдите в систему');
 			navigate('/signin');
 		} catch (error) {
-			toast.error('Ошибка при регистрации');
+			toast.error('Ошибка при регистрации', {
+				position: 'bottom-right',
+			});
 		}
 	};
 

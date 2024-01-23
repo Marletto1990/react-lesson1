@@ -8,12 +8,19 @@ export const Catalog: FC<TCatalog> = ({
 	products,
 	count,
 	total,
+	limit,
 	onPressPagination,
+	onLimitChange,
 }) => {
 	return (
 		<>
 			<Box sx={{ paddingTop: '7rem', paddingBottom: '10rem' }}>
-				<LimitSelect total={total}></LimitSelect>
+				<LimitSelect
+					total={total}
+					limit={limit}
+					onLimitChange={(value: number) =>
+						onLimitChange(value)
+					}></LimitSelect>
 				<Container maxWidth={'lg'}>
 					<Grid
 						container
@@ -45,7 +52,7 @@ export const Catalog: FC<TCatalog> = ({
 						marginTop: '2rem',
 					}}>
 					<Pagination
-						onChange={(event, value) => onPressPagination(value)}
+						onChange={(_, value) => onPressPagination(value)}
 						count={count}
 						color='primary'
 						size='large'
