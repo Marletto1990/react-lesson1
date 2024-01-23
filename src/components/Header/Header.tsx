@@ -10,13 +10,15 @@ import {
 	Avatar,
 	Link,
 } from '@mui/material';
-import { SearchField } from '..';
-import { toast } from 'react-toastify';
+import { SearchField, ShopCartDialog } from '..';
 import { useSelector } from 'react-redux';
 import { setUser, setToken } from '../../storage/reducers/root/selectors';
 import { stringAvatar } from '../../utils/utils';
+import { useAppDispatch } from '../../storage/types';
+import { setShopCartOpen } from '../../storage/reducers/root/rootSlice';
 
 export const Header: FC<THeader> = ({ onSearch }) => {
+	const dispatch = useAppDispatch();
 	const user = useSelector(setUser);
 	const accessToken = useSelector(setToken);
 
@@ -82,11 +84,9 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 							<Badge badgeContent={1} color='error'>
 								<Button
 									variant='contained'
-									onClick={() => {
-										toast.error('Не готово', {
-											position: 'bottom-right',
-										});
-									}}>
+									onClick={() =>
+										dispatch(setShopCartOpen(true))
+									}>
 									Корзина
 								</Button>
 							</Badge>
@@ -107,6 +107,7 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 					</Toolbar>
 				</Toolbar>
 			</AppBar>
+			<ShopCartDialog />
 		</>
 	);
 };
