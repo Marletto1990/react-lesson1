@@ -1,13 +1,12 @@
 import { useState, FC } from 'react';
 
 import { Catalog, Header } from '../components';
-import { withProtection } from '../HOCs/withProtection';
 import { withQuery } from '../HOCs/withQuery';
 import { useGetProductListQuery } from '../storage/api/ProductsApi';
 
 const CatalogWithQuery = withQuery(Catalog);
 
-export const CatalogPage: FC = withProtection(() => {
+export const CatalogPage: FC = () => {
 	const MAX_CARD_ON_PAGE = 6;
 	const [pagination, setPagination] = useState<number>(1);
 	const [searchBy, setSearchBy] = useState<string>('');
@@ -39,4 +38,4 @@ export const CatalogPage: FC = withProtection(() => {
 			/>
 		</>
 	);
-});
+};

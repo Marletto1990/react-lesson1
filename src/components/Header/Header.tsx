@@ -13,10 +13,13 @@ import { Link } from 'react-router-dom';
 import { SearchField } from '..';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { setUser } from '../../storage/reducers/root/selectors';
+import { setUser, setToken } from '../../storage/reducers/root/selectors';
+import { stringAvatar } from '../../utils/utils';
 
 export const Header: FC<THeader> = ({ onSearch }) => {
 	const user = useSelector(setUser);
+	const accessToken = useSelector(setToken);
+
 	return (
 		<>
 			<AppBar
@@ -91,15 +94,10 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 						<Box sx={{ padding: '5px' }}>
 							<Button variant='contained'>Заказы</Button>
 						</Box>
-						{user ? (
+						{accessToken && user ? (
 							<Box sx={{ padding: '5px' }}>
 								<Link to='/profile'>
-									<Avatar
-										sx={{
-											m: 1,
-											bgcolor: 'secondary.main',
-										}}
-									/>
+									<Avatar {...stringAvatar(user.name)} />
 								</Link>
 							</Box>
 						) : (

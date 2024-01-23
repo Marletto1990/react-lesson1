@@ -2,6 +2,10 @@ export type TUserDto = {
 	_id: string;
 	name: string;
 	email: string;
+	group: string;
+	avatar: string;
+	about: string;
+	accessToken: string;
 };
 
 export type TUserUpdateDto = Pick<TUserDto, 'name'>;

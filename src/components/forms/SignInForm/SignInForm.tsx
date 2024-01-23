@@ -67,7 +67,7 @@ export const SignInForm: FC = () => {
 					<LockOutlinedIcon />
 				</Avatar>
 				<Typography component='h1' variant='h5'>
-					Sign In
+					Войти в аккаунт
 				</Typography>
 				<Box
 					component='form'
@@ -80,7 +80,7 @@ export const SignInForm: FC = () => {
 						render={({ field }) => (
 							<TextField
 								margin='normal'
-								label='Email Address'
+								label='Почта'
 								type='email'
 								fullWidth
 								required
@@ -96,7 +96,7 @@ export const SignInForm: FC = () => {
 						control={control}
 						render={({ field }) => (
 							<TextField
-								label='Password'
+								label='Пароль'
 								type='password'
 								error={!!errors.password?.message}
 								// helperText={errors.password?.message}
@@ -115,10 +115,15 @@ export const SignInForm: FC = () => {
 						fullWidth
 						variant='contained'
 						sx={{ mt: 3, mb: 2 }}>
-						Sign In
+						{'Войти'}
 					</LoadingButton>
 				</Box>
-				<Link href='/signup'>{"Don't have an account? Sign Up!"}</Link>
+				<Link href='/signup' variant={'button'} sx={{ m: 3 }}>
+					{'Регистрация'}
+				</Link>
+				<Link href='/' variant={'button'}>
+					{'На Главную'}
+				</Link>
 			</Box>
 		</Container>
 	);
