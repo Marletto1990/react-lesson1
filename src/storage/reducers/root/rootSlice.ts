@@ -21,8 +21,8 @@ export const rootSlice = createSlice({
 			state.user = action.payload;
 			return state;
 		},
-		clearUser(state, action: PayloadAction<TUserDto>) {
-			state.user = action.payload;
+		clearUser(state) {
+			state.accessToken = '';
 			return state;
 		},
 		setToken(state, action: PayloadAction<TRootState['accessToken']>) {
