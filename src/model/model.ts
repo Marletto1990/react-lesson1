@@ -28,6 +28,69 @@ export type TProductDto = {
 	pictures: string;
 };
 
+export type TProductBEDto = {
+	name: string;
+	price: number;
+	discount: number;
+	stock: number;
+	available: boolean;
+	wight: string;
+	description: string;
+	pictures: string;
+	tags: string[];
+	isPublished: boolean;
+	author: {
+		name: string;
+		about: string;
+		avatar: string;
+		email: string;
+		password: string;
+		isAdmin: true;
+		group: string;
+		token: string;
+		_id: string;
+	};
+	likes: [
+		{
+			name: string;
+			about: string;
+			avatar: string;
+			email: string;
+			password: string;
+			isAdmin: true;
+			group: string;
+			token: string;
+			_id: string;
+		}
+	];
+	reviews: [
+		{
+			name: string;
+			city: string;
+			text: string;
+			rating: number;
+			author: {
+				name: string;
+				about: string;
+				avatar: string;
+				email: string;
+				password: string;
+				isAdmin: true;
+				group: string;
+				token: string;
+				_id: string;
+			};
+			product: string;
+			_id: string;
+			updated_at: string;
+			created_at: string;
+		}
+	];
+	_id: string;
+	updated_at: string;
+	created_at: string;
+};
+
 export type TProductDeleteDto = Pick<TProductDto, '_id'>;
 
 export type TProductsDto = {

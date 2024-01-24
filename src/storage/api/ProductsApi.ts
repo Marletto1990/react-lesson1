@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery } from './config';
-// import { TProductDto } from './Api';
+import { TProductBEDto } from '../../model/model';
 
 export const ProductsApi = createApi({
 	reducerPath: 'ProductsApi',
@@ -16,7 +16,12 @@ export const ProductsApi = createApi({
 				},
 			}),
 		}),
+		getProduct: builder.query<TProductBEDto, string | undefined>({
+			query: (productId) => ({
+				url: `/products/${productId}`,
+			}),
+		}),
 	}),
 });
 
-export const { useGetProductListQuery } = ProductsApi;
+export const { useGetProductListQuery, useGetProductQuery } = ProductsApi;

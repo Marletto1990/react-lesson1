@@ -6,6 +6,7 @@ import { Sorter } from './Sorter';
 import { Catalog } from './Catalog';
 import { NavBackButton } from './NavBackButton';
 import { ShopCartDialog } from './ShopCartDialog';
+import { Product } from './Product';
 
 export {
 	Footer,
@@ -16,4 +17,5 @@ export {
 	Catalog,
 	NavBackButton,
 	ShopCartDialog,
+	Product,
 };
