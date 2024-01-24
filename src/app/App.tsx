@@ -18,7 +18,7 @@ const App: FC = () => {
 			errorElement: <NotFoundPage />,
 		},
 		{
-			path: '/product/:id',
+			path: '/product/:productId',
 			element: <ProductPage />,
 		},
 		{

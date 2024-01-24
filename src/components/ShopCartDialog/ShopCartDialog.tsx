@@ -4,7 +4,6 @@ import Dialog from '@mui/material/Dialog';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -27,6 +26,13 @@ const Transition = forwardRef(function Transition(
 });
 
 export const ShopCartDialog: FC = () => {
+	const cartProducts = [
+		{ name: 'Продукт №1', description: 'Описание продукта номер 1' },
+		{ name: 'Продукт №2', description: 'Описание продукта номер 2' },
+		{ name: 'Продукт №3', description: 'Описание продукта номер 3' },
+		{ name: 'Продукт №4', description: 'Описание продукта номер 4' },
+		{ name: 'Продукт №5', description: 'Описание продукта номер 5' },
+	];
 	const dispatch = useAppDispatch();
 	const shopCartOpen = useSelector(getShopCartOpen);
 
@@ -60,31 +66,16 @@ export const ShopCartDialog: FC = () => {
 					</Toolbar>
 				</AppBar>
 				<List>
-					<ListItemButton>
-						<ListItemText
-							primary='Продукт №1'
-							secondary='Описание продукта номер 1'
-						/>
-					</ListItemButton>
-					<Divider />
-					<ListItemButton>
-						<ListItemText
-							primary='Продукт №2'
-							secondary='Описание продукта номер 2'
-						/>
-					</ListItemButton>
-					<ListItemButton>
-						<ListItemText
-							primary='Продукт №3'
-							secondary='Описание продукта номер 3'
-						/>
-					</ListItemButton>
-					<ListItemButton>
-						<ListItemText
-							primary='Продукт №4'
-							secondary='Описание продукта номер 4'
-						/>
-					</ListItemButton>
+					{cartProducts.map((e, i) => {
+						return (
+							<ListItemButton key={i}>
+								<ListItemText
+									primary={e.name}
+									secondary={e.description}
+								/>
+							</ListItemButton>
+						);
+					})}
 				</List>
 			</Dialog>
 		</>
