@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { THeader } from './THeader';
 import {
 	AppBar,
 	Toolbar,
@@ -10,14 +9,15 @@ import {
 	Avatar,
 	Link,
 } from '@mui/material';
-import { SearchField, ShopCartDialog } from '..';
+import { ShopCartDialog } from '..';
 import { useSelector } from 'react-redux';
 import { setUser, setToken } from '../../storage/reducers/root/selectors';
 import { stringAvatar } from '../../utils/utils';
 import { useAppDispatch } from '../../storage/types';
 import { setShopCartOpen } from '../../storage/reducers/root/rootSlice';
+import { SearchForm } from '../forms/SearchForm/SearchForm';
 
-export const Header: FC<THeader> = ({ onSearch }) => {
+export const Header: FC = () => {
 	const dispatch = useAppDispatch();
 	const user = useSelector(setUser);
 	const accessToken = useSelector(setToken);
@@ -68,7 +68,7 @@ export const Header: FC<THeader> = ({ onSearch }) => {
 				</Toolbar>
 				<Toolbar sx={{ justifyContent: 'end', width: '50%' }}>
 					<Box>
-						<SearchField onSearch={onSearch} />
+						<SearchForm />
 					</Box>
 					<Toolbar sx={{ padding: '5px' }}>
 						<Box sx={{ padding: '5px' }}>
