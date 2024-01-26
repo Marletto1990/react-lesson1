@@ -15,6 +15,9 @@ export const ProductsApi = createApi({
 					page,
 				},
 			}),
+			serializeQueryArgs: ({ endpointName, queryArgs: { query } }) => {
+				return endpointName + query;
+			},
 		}),
 		getProduct: builder.query<TProductBEDto, string | undefined>({
 			query: (productId) => ({

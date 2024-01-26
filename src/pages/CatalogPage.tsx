@@ -3,22 +3,20 @@ import { useState, FC } from 'react';
 import { Catalog, Header } from '../components';
 import { withQuery } from '../HOCs/withQuery';
 import { useGetProductListQuery } from '../storage/api/ProductsApi';
+import { useSelector } from 'react-redux';
+import { getSearchQuery } from '../storage/reducers/root/selectors';
 
 const CatalogWithQuery = withQuery(Catalog);
 
 export const CatalogPage: FC = () => {
 	const [limit, setLimit] = useState<number>(10);
 	const [pagination, setPagination] = useState<number>(1);
-	const [searchBy, setSearchBy] = useState<string>('');
+	const searchQuery = useSelector(getSearchQuery);
 	const { data, isLoading, isError } = useGetProductListQuery({
 		page: pagination,
 		limit: limit,
-		query: searchBy,
+		query: searchQuery,
 	});
-
-	const onSearch = (value: string) => {
-		setSearchBy(value);
-	};
 
 	const onPageChange = (value: number) => {
 		setPagination(value);
@@ -30,7 +28,7 @@ export const CatalogPage: FC = () => {
 
 	return (
 		<>
-			<Header busy={isLoading} onSearch={onSearch}></Header>
+			<Header />
 			<CatalogWithQuery
 				isLoading={isLoading}
 				isError={isError}
