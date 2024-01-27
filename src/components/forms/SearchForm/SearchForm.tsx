@@ -15,9 +15,9 @@ export const SearchForm: FC = () => {
 	const debouncedQuery = useDebounce(query, 500);
 
 	useEffect(() => {
-		if (query) {
-			searchParams.set('query', query);
-			dispatch(setSearchQuery(query));
+		if (debouncedQuery) {
+			searchParams.set('query', debouncedQuery);
+			dispatch(setSearchQuery(debouncedQuery));
 		} else {
 			searchParams.delete('query');
 			dispatch(setSearchQuery(''));
