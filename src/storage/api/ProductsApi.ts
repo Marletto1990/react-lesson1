@@ -18,6 +18,13 @@ export const ProductsApi = createApi({
 			serializeQueryArgs: ({ endpointName, queryArgs: { query } }) => {
 				return endpointName + query;
 			},
+			merge: (currentCache, newValue, { arg: { page } }) => {
+				if (page === 1) return;
+				currentCache.products.push(...newValue.products);
+			},
+			forceRefetch({ currentArg, previousArg }) {
+				return currentArg !== previousArg;
+			},
 		}),
 		getProduct: builder.query<TProductBEDto, string | undefined>({
 			query: (productId) => ({

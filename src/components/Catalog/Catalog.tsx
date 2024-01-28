@@ -1,26 +1,12 @@
 import { FC } from 'react';
 import { TCatalog } from './TCatalog';
-import { Box, Container, Pagination, Grid } from '@mui/material';
+import { Box, Container, Grid } from '@mui/material';
 import { ProductCard } from '..';
-import { LimitSelect } from '../LimitSelect/LimitSelect';
 
-export const Catalog: FC<TCatalog> = ({
-	products,
-	count,
-	total,
-	limit,
-	onPressPagination,
-	onLimitChange,
-}) => {
+export const Catalog: FC<TCatalog> = ({ products }) => {
 	return (
 		<>
 			<Box sx={{ paddingTop: '7rem', paddingBottom: '10rem' }}>
-				<LimitSelect
-					total={total}
-					limit={limit}
-					onLimitChange={(value: number) =>
-						onLimitChange(value)
-					}></LimitSelect>
 				<Container maxWidth={'lg'}>
 					<Grid
 						container
@@ -44,21 +30,6 @@ export const Catalog: FC<TCatalog> = ({
 						))}
 					</Grid>
 				</Container>
-				<Box
-					alignItems={'center'}
-					sx={{
-						display: 'flex',
-						justifyContent: 'center',
-						marginTop: '2rem',
-					}}>
-					<Pagination
-						onChange={(_, value) => onPressPagination(value)}
-						count={count}
-						color='primary'
-						size='large'
-						siblingCount={2}
-					/>
-				</Box>
 			</Box>
 		</>
 	);
