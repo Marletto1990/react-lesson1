@@ -1,30 +1,34 @@
-import { useState, FC } from 'react';
+import { useState, FC, useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import { Catalog, Header } from '../components';
 import { withQuery } from '../HOCs/withQuery';
 import { useGetProductListQuery } from '../storage/api/ProductsApi';
-import { useSelector } from 'react-redux';
 import { getSearchQuery } from '../storage/reducers/root/selectors';
+import { useDebounce } from '../hooks/useDebouce';
+import { LoadMore } from '../components/shared/LoadMore';
 
 const CatalogWithQuery = withQuery(Catalog);
 
 export const CatalogPage: FC = () => {
-	const [limit, setLimit] = useState<number>(10);
-	const [pagination, setPagination] = useState<number>(1);
+	const limit = 12;
+	const [page, setPage] = useState<number>(1);
 	const searchQuery = useSelector(getSearchQuery);
-	const { data, isLoading, isError } = useGetProductListQuery({
-		page: pagination,
+	const debounceQuery = useDebounce<string>(searchQuery);
+	const { data, isLoading, isError, isFetching } = useGetProductListQuery({
+		page: page,
 		limit: limit,
 		query: searchQuery,
 	});
+	const isEndOfList = data && data.products.length >= data.total;
 
-	const onPageChange = (value: number) => {
-		setPagination(value);
-	};
+	const loadMore = useCallback(() => {
+		setPage((prev) => prev + 1);
+	}, [isEndOfList]);
 
-	const onLimitChange = (value: number) => {
-		setLimit(value);
-	};
+	useEffect(() => {
+		setPage(1);
+	}, [debounceQuery]);
 
 	return (
 		<>
@@ -32,13 +36,13 @@ export const CatalogPage: FC = () => {
 			<CatalogWithQuery
 				isLoading={isLoading}
 				isError={isError}
-				pagination={pagination}
-				count={Math.ceil(data?.total / limit)}
 				products={data?.products}
-				onPressPagination={onPageChange}
 				total={data?.total}
-				limit={limit}
-				onLimitChange={onLimitChange}
+			/>
+			<LoadMore
+				action={loadMore}
+				isEndOfList={isEndOfList}
+				isLoading={isFetching}
 			/>
 		</>
 	);

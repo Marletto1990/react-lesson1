@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useDebounce<T>(value: T, delay?: number): T {
+export function useThrottle<T>(value: T, delay?: number): T {
 	const [throttledValue, setThrottledValue] = useState<T>(value);
 	const ref = useRef({ value, inProgress: false });
 	useEffect(() => {
